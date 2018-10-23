@@ -4,14 +4,10 @@ export type AuthenticatedState = {
     expiry: Date | null
 }
 
-export type PasswordState = {
-    status: 'active' | 'inactive',
-    password: string | null
-}
-
 export type DiaryState = {
     id: string,
     title: string,
+    password: string | null,
     entries: EntriesState | null
 }
 
@@ -27,7 +23,6 @@ export type EntryState = {
 }
 
 export type State = {
-    pwd: PasswordState,
     auth: AuthenticatedState,
     diaries: Array<DiaryState>
 }

@@ -7,8 +7,13 @@ export type AuthenticatedState = {
 export type DiaryState = {
     id: string,
     title: string,
-    password: string | null,
-    entries: EntriesState | null
+    password: PasswordState,
+    entries: EntriesState
+}
+
+export type PasswordState = {
+    status: 'initial' | 'available',
+    password: string | null
 }
 
 export type EntriesState = {
@@ -23,6 +28,7 @@ export type EntryState = {
 }
 
 export type State = {
+    pwd: PasswordState,
     auth: AuthenticatedState,
     diaries: Array<DiaryState>
 }

@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "jsx": "preserve",
+        "jsxFactory": "h",
+        "moduleResolution": "node",
+        "module": "esnext",
+        "target": "esnext",
+        "sourceMap": true,
+        "allowSyntheticDefaultImports": true
+    }
+}

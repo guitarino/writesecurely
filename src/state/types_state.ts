@@ -12,8 +12,9 @@ export type DiaryState = {
 }
 
 export type PasswordState = {
-    status: 'initial' | 'available',
-    password: string | null
+    status: 'initial' | 'loading' | 'correct' | 'incorrect',
+    password: string | null,
+    salt: string
 }
 
 export type EntriesState = {
@@ -24,7 +25,8 @@ export type EntriesState = {
 export type EntryState = {
     status: 'initial' | 'loading' | 'loaded' | 'error',
     title: string,
-    text: string | null
+    text: string | null,
+    modifiedText: string | null
 }
 
 export type State = {

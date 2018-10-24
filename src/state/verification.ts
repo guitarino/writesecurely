@@ -1,0 +1,1 @@
+export const VERIFICATION_MESSAGE = 'Well sir, it looks as though decryption with the provided password worked fine. Congratulations!';

@@ -1,5 +1,4 @@
 import { h, Component } from "preact";
-
 import "./App.scss";
 
 export class App extends Component {

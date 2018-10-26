@@ -3,7 +3,7 @@ import "./main.scss";
 
 async function main() {
     const root = document.getElementById("WriteSecurely");
-    const { renderAt } = await import('./components/App');
+    const { renderAt } = await import('./components/WriteSecurely');
     renderAt(root);
 }
 

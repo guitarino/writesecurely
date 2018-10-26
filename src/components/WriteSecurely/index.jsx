@@ -2,33 +2,31 @@ import { h, render } from "preact";
 import { WriteSecurely as WriteSecurelyStateless } from "./WriteSecurely";
 import { Provider, connect } from "preact-redux";
 import { store } from "../../state/store";
-import { push, replace, goBack, go, goForward } from "../../state/actions_history";
-import { TState } from "../../state/types_state";
+import { push, replace, goBack, go, goForward, redirect } from "../../state/actions_history";
 
-function mapStateToProps(state: TState) {
+function mapStateToProps(state) {
     return {
         location: state.location,
     }
 }
 
-function mapDispatchToProps() {
-    return {
-        push: push,
-        replace: replace,
-        go: go,
-        goBack: goBack,
-        goForward: goForward,
-    }
-}
+const mapDispatchToProps = {
+    push: push,
+    replace: replace,
+    go: go,
+    goBack: goBack,
+    goForward: goForward,
+    redirect: redirect,
+};
 
 const WriteSecurely = connect(
     mapStateToProps,
     mapDispatchToProps
 )(
-    WriteSecurelyStateless as any
+    WriteSecurelyStateless
 );
 
-export function renderAt(element: HTMLElement) {
+export function renderAt(element) {
     render(
         <Provider store={store}>
             <WriteSecurely />

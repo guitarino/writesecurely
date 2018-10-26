@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-    entry: path.join(__dirname, 'src', 'main.ts'),
+    entry: path.join(__dirname, 'src', 'main.js'),
     mode: "development",
     output: {
         publicPath: './src/',
@@ -13,25 +13,11 @@ module.exports = {
         chunkFilename: '[id].js',
     },
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
+        extensions: ['.js', '.jsx', '.json']
     },
     devtool: 'source-map',
     module: {
         rules: [
-            {
-                test: /\.tsx?$/,
-                exclude: /(node_modules|bower_components)/,
-                use: [{
-                    loader: 'awesome-typescript-loader',
-                    options: {
-                        useBabel: true,
-                        babelOptions: {
-                            babelrc: true
-                        },
-                        babelCore: "@babel/core"
-                    }
-                }]
-            },
             {
                 test: /\.m?jsx?$/,
                 exclude: /(node_modules|bower_components)/,

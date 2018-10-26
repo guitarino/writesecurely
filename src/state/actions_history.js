@@ -1,20 +1,17 @@
+import queryString from "query-string";
+
 export const HISTORY_LOCATION_CHANGE = 'HISTORY_LOCATION_CHANGE';
 
-export type TLocation = {
-    href: string,
-    host: string,
-    pathname: string,
-    search: string,
-    hash: string,
-}
-
-function getCurrentLocation(): TLocation {
+export function getCurrentLocation() {
+    const location = window.location;
     return {
-        href: window.location.href,
-        host: window.location.host,
-        pathname: window.location.pathname,
-        search: window.location.search,
-        hash: window.location.hash,
+        href: location.href,
+        host: location.host,
+        pathname: location.pathname,
+        search: location.search,
+        searchQuery: queryString.parse(location.search),
+        hash: location.hash,
+        hashQuery: queryString.parse(location.hash),
     }
 }
 
@@ -34,7 +31,6 @@ export function history(store) {
     }
     return {
         register: function() {
-            listener();
             window.addEventListener('popstate', listener);
         },
         unregister: function() {
@@ -43,21 +39,21 @@ export function history(store) {
     }
 }
 
-export function push(url: string) {
+export function push(url) {
     return function(dispatch) {
         window.history.pushState(null, null, url);
         dispatchCurrentLocation(dispatch);
     }
 }
 
-export function replace(url: string) {
+export function replace(url) {
     return function(dispatch) {
         window.history.replaceState(null, null, url);
         dispatchCurrentLocation(dispatch);
     }
 }
 
-export function go(steps: number) {
+export function go(steps) {
     return function(dispatch) {
         window.history.go(steps);
         dispatchCurrentLocation(dispatch);
@@ -75,5 +71,11 @@ export function goForward() {
     return function(dispatch) {
         window.history.forward();
         dispatchCurrentLocation(dispatch);
+    }
+}
+
+export function redirect(url) {
+    return function() {
+        window.location.href = url;
     }
 }

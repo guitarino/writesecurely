@@ -1,9 +1,3 @@
-import { TLocation } from "./actions_history";
-
-export type TState = {
-    location: TLocation
-}
-
 // export type AuthenticatedState = {
 //     status: 'authenticated' | 'not authenticated',
 //     token: string | null,

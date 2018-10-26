@@ -1,4 +1,5 @@
 {
-    "clientId": "7fc2d48d8e06b0f051da1ec0344f1bebb0403e35a7e5cb8a1a7fb7758711e3c1",
-    "redirectUri": "http://localhost:8080/?page=oauth_redirect"
+    "gitlabApiUri": "https://gitlab.com/api/v4",
+    "gitlabOauthClientId": "7fc2d48d8e06b0f051da1ec0344f1bebb0403e35a7e5cb8a1a7fb7758711e3c1",
+    "gitlabOauthRedirectUri": "http://localhost:8080/?page=oauth_redirect"
 }

@@ -19,7 +19,7 @@ const mapDispatchToProps = {
     redirect: redirect,
 };
 
-const WriteSecurely = connect(
+export const WriteSecurely = connect(
     mapStateToProps,
     mapDispatchToProps
 )(

@@ -5,9 +5,11 @@
 // }
 
 // export type DiaryState = {
-//     id: string,
+//     id: number,
 //     title: string,
 //     password: PasswordState,
+//     fontSize: number,
+//     googleFontName: string,
 //     entries: EntriesState
 // }
 

@@ -1,7 +1,9 @@
 // export type AuthenticatedState = {
-//     status: 'authenticated' | 'not authenticated',
+//     status: 'not authenticated' | 'authenticated' | 'error',
 //     token: string | null,
-//     expiry: Date | null
+//     expiry: Date | null,
+//     error: string | null,
+//     errorDescription: string | null
 // }
 
 // export type DiaryState = {

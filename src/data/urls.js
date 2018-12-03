@@ -1,5 +1,5 @@
 export const pages = {
-    main_page: 'main_page',
+    welcome_page: 'welcome_page',
     diary_selection: 'diary_selection',
 }
 

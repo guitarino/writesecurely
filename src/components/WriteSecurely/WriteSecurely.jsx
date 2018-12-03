@@ -13,7 +13,7 @@ export function WriteSecurely({
 
     return (
         !searchQuery.page ||
-        searchQuery.page === pages.main_page ||
+        searchQuery.page === pages.welcome_page ||
         credentials.status === "not authenticated" ||
         credentials.status === "error" ?
         <WelcomePage /> :

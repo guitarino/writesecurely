@@ -20,6 +20,7 @@
   "homepage": "https://github.com/guitarino/writesecurely#readme",
   "devDependencies": {
     "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/plugin-transform-react-jsx": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
@@ -43,6 +44,7 @@
     "preact": "^8.3.1",
     "preact-redux": "^2.0.3",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "resize-sensor--preact": "^1.0.2"
   }
 }

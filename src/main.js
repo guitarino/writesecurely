@@ -1,5 +1,6 @@
 import "@babel/polyfill";
 import "./main.scss";
+import "./fonts.scss";
 
 async function main() {
     const root = document.getElementById("WriteSecurely");

@@ -1,0 +1,22 @@
+.WriteSecurelyLabel {
+    display: inline-block;
+    font-family: 'Srisakdi', cursive;
+    font-weight: bold;
+    position: relative;
+
+    .WriteSecurelyLogo {
+        margin-left: 0.2em;
+        margin-right: 0.2em;
+    }
+}
+
+.WriteSecurelyLogo {
+    display: inline-block;
+    background-size: contain;
+    background-position: 50% 50%;
+    background-image: url('/assets/images/logo.png');
+    background-repeat: no-repeat;
+    height: 1.5em;
+    width: 1.164em;
+    vertical-align: middle;
+}

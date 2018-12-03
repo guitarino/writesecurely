@@ -1,5 +1,6 @@
 import { h } from "preact";
 import "./WelcomePage.scss";
+import { WriteSecurelyLabel } from "../WriteSecurelyLogo/WriteSecurelyLogo";
 
 export function WelcomePage({
     credentials,
@@ -8,9 +9,9 @@ export function WelcomePage({
     return (
         <main class="WelcomePage">
             <article class="WelcomePage__WelcomeCard">
-                <section class="WelcomePage__Header">Welcome to WriteSecurely</section>
+                <section class="WelcomePage__Header"><WriteSecurelyLabel /></section>
                 <section class="WelcomePage__Information">
-                    <p>WriteSecurely is a private note-taking web application.</p>
+                    <p><WriteSecurelyLabel hasLogo={false} /> is a private note-taking web application.</p>
                     <p>It allows you to create your own private diary and write encrypted notes.</p>
                 </section>
                 <section class="WelcomePage__HowSection">

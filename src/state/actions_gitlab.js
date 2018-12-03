@@ -1,5 +1,5 @@
 import { gitlabOauthUri, gitlabOauthClientId, gitlabOauthRedirectUri } from "../../config/dev.oauth.json";
-import { redirect, push } from "./actions_history.js";
+import { redirect, replace } from "./actions_history.js";
 import { saveCredentials } from "./actions_credentials.js";
 import { urls } from "../data/urls.js";
 
@@ -33,7 +33,7 @@ export function saveCredentialsFromOauthAndRedirect(state, dispatch) {
                         "authToken",
                         hashQuery.access_token
                     );
-                    dispatch(push(urls.diary_selection));
+                    dispatch(replace(urls.diary_selection));
                 }
                 else {
                     dispatch(saveCredentials({
@@ -51,7 +51,7 @@ export function saveCredentialsFromOauthAndRedirect(state, dispatch) {
                         token: storedToken
                     }));
                     if (!searchQuery.page) {
-                        dispatch(push(urls.diary_selection));
+                        dispatch(replace(urls.diary_selection));
                     }
                 }
             }

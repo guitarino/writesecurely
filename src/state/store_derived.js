@@ -1,8 +1,8 @@
 import { store } from "./store";
-import { saveCredentialsFromOauth } from "./actions_gitlab";
+import { saveCredentialsFromOauthAndRedirect } from "./actions_gitlab";
 
 const funcList = [
-        saveCredentialsFromOauth,
+        saveCredentialsFromOauthAndRedirect,
     ]
     .map(
         (func) => memoize(func)

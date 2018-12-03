@@ -1,6 +1,7 @@
 import { gitlabOauthUri, gitlabOauthClientId, gitlabOauthRedirectUri } from "../../config/dev.oauth.json";
-import { redirect } from "./actions_history.js";
+import { redirect, push } from "./actions_history.js";
 import { saveCredentials } from "./actions_credentials.js";
+import { urls } from "../data/urls.js";
 
 export function login() {
     return function(dispatch) {
@@ -14,7 +15,51 @@ export function login() {
     }
 }
 
-export function saveCredentialsFromOauth(state, dispatch) {
+export function saveCredentialsFromOauthAndRedirect(state, dispatch) {
+    const { searchQuery, hashQuery } = state.location;
+    return [
+        {
+            searchQuery,
+            hashQuery
+        },
+        function ({ searchQuery, hashQuery }) {
+            if (searchQuery.page === "oauth_redirect") {
+                if (hashQuery.access_token) {
+                    dispatch(saveCredentials({
+                        status: 'authenticated',
+                        token: hashQuery.access_token
+                    }));
+                    sessionStorage.setItem(
+                        "authToken",
+                        hashQuery.access_token
+                    );
+                    dispatch(push(urls.diary_selection));
+                }
+                else {
+                    dispatch(saveCredentials({
+                        status: 'error',
+                        error: hashQuery.error || 'unknown',
+                        errorDescription: hashQuery.error_description || "No description."
+                    }));
+                }
+            }
+            else {
+                const storedToken = sessionStorage.getItem("authToken");
+                if (storedToken) {
+                    dispatch(saveCredentials({
+                        status: 'authenticated',
+                        token: storedToken
+                    }));
+                    if (!searchQuery.page) {
+                        dispatch(push(urls.diary_selection));
+                    }
+                }
+            }
+        }
+    ];
+}
+
+export function redirectWhenAuthenticated(state, dispatch) {
     const { searchQuery, hashQuery } = state.location;
     return [
         {

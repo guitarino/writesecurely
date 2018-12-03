@@ -12,7 +12,7 @@ export function WelcomePage({
                 <section class="WelcomePage__Header"><WriteSecurelyLabel /></section>
                 <section class="WelcomePage__Information">
                     <p><WriteSecurelyLabel hasLogo={false} /> is a private note-taking web application.</p>
-                    <p>It allows you to create your own private diary and write encrypted notes.</p>
+                    <p>It allows you to create your own private diaries and write encrypted notes.</p>
                 </section>
                 <section class="WelcomePage__HowSection">
                     <p class="WelcomePage__How">How does it work?</p>

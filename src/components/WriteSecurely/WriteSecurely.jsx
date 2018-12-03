@@ -3,7 +3,7 @@ import "./WriteSecurely.scss";
 import { WelcomePage } from "../WelcomePage";
 import { pages } from "../../data/urls";
 import { DiarySelection } from "../DiarySelection";
-import { NotFoundPage } from "../NotFoundPage/NotFoundPage";
+import { NotFoundPage } from "../NotFoundPage";
 
 export function WriteSecurely({
     location,

@@ -19,7 +19,7 @@ export function WelcomePage({
                     <ol class="WelcomePage__HowList">
                         <li class="WelcomePage__HowListItem">Sign in via GitLab. GitLab is a service that allows you to create private / public repositories and store content inside of them.</li>
                         <li class="WelcomePage__HowListItem">Create a private diary and choose a password for it. Every diary note will be encrypted with the password using AES-256 encryption.</li>
-                        <li class="WelcomePage__HowListItem">Create, edit and delete private notes, create and customize multiple diaries. Nobody will be able to read your diary without knowing a password for it.</li>
+                        <li class="WelcomePage__HowListItem">Create, edit and delete private notes, create and customize multiple diaries. Nobody will be able to read your diary without knowing the password for it.</li>
                     </ol>
                 </section>
                 {

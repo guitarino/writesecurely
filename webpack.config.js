@@ -13,7 +13,10 @@ module.exports = {
         chunkFilename: '[id].js',
     },
     resolve: {
-        extensions: ['.js', '.jsx', '.json']
+        extensions: ['.js', '.jsx', '.json'],
+        alias: {
+            Config: path.resolve(__dirname, "./config/dev.config.json")
+        }
     },
     devtool: 'source-map',
     module: {

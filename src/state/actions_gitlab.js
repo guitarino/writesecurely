@@ -1,4 +1,4 @@
-import { gitlabOauthUri, gitlabOauthClientId, gitlabOauthRedirectUri } from "../../config/dev.oauth.json";
+import { gitlabOauthUri, gitlabOauthClientId, gitlabOauthRedirectUri } from "Config";
 import { redirect, replace } from "./actions_history.js";
 import { saveCredentials } from "./actions_credentials.js";
 import { urls } from "../data/urls.js";
@@ -97,4 +97,51 @@ export function redirectWhenAuthenticated(state, dispatch) {
             }
         }
     ];
+}
+
+export function fetchGitlab(
+    action_prefix,
+    request_list
+) {
+    return function (dispatch, getState) {
+        const { credentials } = getState();
+        
+        dispatch({
+            type: `${action_prefix}_LOADING`
+        });
+
+        return request_list
+            .reduce(
+                (currentPromise, request) => {
+                    return currentPromise.then(
+                        (previousResult) => {
+                            const {
+                                method,
+                                url,
+                                headers = {},
+                                body
+                            } = request(previousResult);
+                            headers.authorization = `Bearer ${credentials.token}`;
+                            return fetch(url, {
+                                method,
+                                headers,
+                                body
+                            });
+                        }
+                    )
+                        .then(response => response.json())
+                    ;
+                },
+                Promise.resolve()
+            )
+            .then(payload => dispatch({
+                type: `${action_prefix}_SUCCESS`,
+                payload
+            }))
+            .catch(error => dispatch({
+                type: `${action_prefix}_ERROR`,
+                error
+            }))
+        ;
+    }
 }

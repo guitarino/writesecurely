@@ -4,10 +4,12 @@ import { history } from "./actions_history";
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import { credentialsReducer } from "./reducers_credentials";
+import { diaryReducer } from "./reducers_diary";
 
 export const store = createStore(combineReducers({
     credentials: credentialsReducer,
-    location: locationReducer
+    location: locationReducer,
+    diaries: diaryReducer
 }), composeWithDevTools(
     applyMiddleware(thunk)
 ));

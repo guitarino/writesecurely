@@ -9,14 +9,9 @@ export const FETCH_DIARIES_ERROR = `${FETCH_DIARIES}_ERROR`;
 export function fetchDiaries() {
     return fetchGitlab(
         FETCH_DIARIES,
-        [
-            () => ({
-                method: 'GET',
-                url: `${gitlabApiUri}/projects?owned=true&search=my-great-project`
-            }),
-            () => ({
-                
-            })
-        ]
+        (project) => ({
+            method: 'GET',
+            url: `${gitlabApiUri}/projects/${project}/repository/files/diaries.json/raw?ref=master`
+        })
     );
 }

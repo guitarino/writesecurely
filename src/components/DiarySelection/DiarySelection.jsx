@@ -1,6 +1,7 @@
 import { h } from "preact";
 import "./DiarySelection.scss";
 import { WriteSecurelyLabel } from "../WriteSecurelyLogo/WriteSecurelyLogo";
+import { encrypt, getHash, decrypt } from "../../crypto-worker";
 
 export class DiarySelection {
     render() {

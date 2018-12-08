@@ -4,12 +4,15 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-    entry: path.join(__dirname, 'src', 'main.js'),
+    entry: {
+        "main": path.join(__dirname, 'src', 'main.js'),
+        "crypto-worker": path.join(__dirname, 'src', 'crypto-worker', 'crypto-worker.js')
+    },
     mode: "development",
     output: {
         publicPath: './src/',
         path: path.join(__dirname, './build/src'),
-        filename: 'main.js',
+        filename: '[name].js',
         chunkFilename: '[id].js',
     },
     resolve: {

@@ -1,7 +1,9 @@
-import { gitlabOauthUri, gitlabOauthClientId, gitlabOauthRedirectUri } from "Config";
+import { gitlabApiUri, gitlabOauthUri, gitlabOauthClientId, gitlabOauthRedirectUri } from "Config";
 import { redirect, replace } from "./actions_history.js";
 import { saveCredentials } from "./actions_credentials.js";
 import { urls } from "../data/urls.js";
+
+export let projectPromise;
 
 export function login() {
     return function(dispatch) {
@@ -101,39 +103,47 @@ export function redirectWhenAuthenticated(state, dispatch) {
 
 export function fetchGitlab(
     action_prefix,
-    request_list
+    request
 ) {
     return function (dispatch, getState) {
-        const { credentials } = getState();
-        
+        let { credentials } = getState();
+        const authorization = `Bearer ${credentials.token}`;
         dispatch({
             type: `${action_prefix}_LOADING`
         });
-
-        return request_list
-            .reduce(
-                (currentPromise, request) => {
-                    return currentPromise.then(
-                        (previousResult) => {
-                            const {
-                                method,
-                                url,
-                                headers = {},
-                                body
-                            } = request(previousResult);
-                            headers.authorization = `Bearer ${credentials.token}`;
-                            return fetch(url, {
-                                method,
-                                headers,
-                                body
-                            });
-                        }
-                    )
-                        .then(response => response.json())
-                    ;
-                },
-                Promise.resolve()
-            )
+        if (!projectPromise) {
+            projectPromise = fetch(`${gitlabApiUri}/projects?owned=true&search=write-securely-diaries`, {
+                headers: {
+                    authorization
+                }
+            })
+                .then(response => response.json())
+                .then(([ project ]) => {
+                    return project;
+                })
+                .catch(() => {
+                    projectPromise = null;
+                })
+            ;
+        }
+        return projectPromise
+            .then(project => {
+                const {
+                    method,
+                    url,
+                    headers = {},
+                    body
+                } = request(
+                    project.id
+                );
+                headers.authorization = authorization;
+                return fetch(url, {
+                    method,
+                    headers,
+                    body
+                });
+            })
+            .then(response => response.json())
             .then(payload => dispatch({
                 type: `${action_prefix}_SUCCESS`,
                 payload

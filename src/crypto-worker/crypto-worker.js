@@ -1,7 +1,5 @@
 import aesjs from "aes-js";
 
-const counterStart = 1;
-
 self.addEventListener("message", (e) => {
     const action = e.data;
 
@@ -11,14 +9,16 @@ self.addEventListener("message", (e) => {
 
     if (action.type === "encrypt") {
         try {
-            var textBytes = aesjs.utils.utf8.toBytes(action.text);
-            var aesCtr = new aesjs.ModeOfOperation.ctr(action.hash, new aesjs.Counter(counterStart));
-            var encryptedBytes = aesCtr.encrypt(textBytes);
-            var encryptedHex = aesjs.utils.hex.fromBytes(encryptedBytes);
+            const iv = getRandomIV();
+            const ivHex = aesjs.utils.hex.fromBytes(iv);
+            const textBytes = aesjs.utils.utf8.toBytes(action.text);
+            const aesCbc = new aesjs.ModeOfOperation.cbc(action.hash, iv);
+            const encryptedBytes = aesCbc.encrypt(textBytes);
+            const encryptedHex = aesjs.utils.hex.fromBytes(encryptedBytes);
             self.postMessage({
                 type: "encrypt-result",
                 requestId: action.requestId,
-                result: encryptedHex
+                result: `${ivHex};${encryptedHex}`
             });
         }
         catch (error) {
@@ -32,10 +32,12 @@ self.addEventListener("message", (e) => {
 
     if (action.type === "decrypt") {
         try {
-            var encryptedBytes = aesjs.utils.hex.toBytes(action.text);
-            var aesCtr = new aesjs.ModeOfOperation.ctr(action.hash, new aesjs.Counter(counterStart));
-            var decryptedBytes = aesCtr.decrypt(encryptedBytes);
-            var decryptedText = aesjs.utils.utf8.fromBytes(decryptedBytes);
+            const [ ivHex, contentHex ] = action.text.split(";");
+            const iv = aesjs.utils.hex.toBytes(ivHex);
+            const encryptedBytes = aesjs.utils.hex.toBytes(contentHex);
+            const aesCbc = new aesjs.ModeOfOperation.cbc(action.hash, iv);
+            const decryptedBytes = aesCbc.decrypt(encryptedBytes);
+            const decryptedText = aesjs.utils.utf8.fromBytes(decryptedBytes);
             self.postMessage({
                 type: "decrypt-result",
                 requestId: action.requestId,
@@ -51,3 +53,15 @@ self.addEventListener("message", (e) => {
         }
     }
 });
+
+function getRandom(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function getRandomIV() {
+    const iv = [];
+    for (var i = 0; i < 16; i++) {
+        iv.push(getRandom(0, 256));
+    }
+    return iv;
+}

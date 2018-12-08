@@ -18,6 +18,9 @@ export function WriteSecurely({
         credentials.status === "error" ?
         <WelcomePage /> :
 
+        searchQuery.page === pages.password_entry ?
+        <PasswordEntry /> :
+
         searchQuery.page === pages.diary_selection ?
         <DiarySelection /> :
 

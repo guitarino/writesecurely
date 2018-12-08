@@ -1,11 +1,11 @@
 import { h } from "preact";
 import "./DiarySelection.scss";
 import { WriteSecurelyLabel } from "../WriteSecurelyLogo/WriteSecurelyLogo";
-import { encrypt, getHash, decrypt } from "../../crypto-worker";
+import { saveEncryptedFile, fetchEncryptedFile } from "../../api/gitlab";
 
 export class DiarySelection {
     render() {
-        console.log(this.props.diaries);
+        // console.log(this.props.diaries);
         
         return (
             <div class="DiarySelection">
@@ -21,7 +21,11 @@ export class DiarySelection {
     }
 
     componentWillMount() {
-        this.props.fetchDiaries();
+        saveEncryptedFile("encrFileTest1.aes", "Hello World 2223")
+        .then(console.log)
+        .then(() => fetchEncryptedFile("encrFileTest1.aes"))
+        .then(console.log);
+        // this.props.fetchDiaries();
     }
 }
 

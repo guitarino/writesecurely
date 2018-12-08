@@ -77,10 +77,10 @@ export function saveEncryptedFile(filename, text, action) {
     );
     let promise;
     let original = encrypt(text, hash);
-    if (action === 'Create') {
+    if (action === 'create') {
         promise = original.then(fetchContent('POST'));
     }
-    else if(action === 'Update') {
+    else if(action === 'update') {
         promise = original.then(fetchContent('PUT'));
     }
     else {

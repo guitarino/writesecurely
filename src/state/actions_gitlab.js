@@ -33,7 +33,7 @@ export function saveCredentialsFromOauthAndRedirect(state, dispatch) {
                         "authToken",
                         hashQuery.access_token
                     );
-                    dispatch(replace(urls.diary_selection));
+                    dispatch(replace(urls.password_entry));
                 }
                 else {
                     dispatch(saveCredentials({
@@ -51,7 +51,7 @@ export function saveCredentialsFromOauthAndRedirect(state, dispatch) {
                         token: storedToken
                     }));
                     if (!searchQuery.page) {
-                        dispatch(replace(urls.diary_selection));
+                        dispatch(replace(urls.password_entry));
                     }
                 }
             }

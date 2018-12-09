@@ -9,8 +9,8 @@ export function WriteSecurelyLabel({ hasLogo = true }) {
     )
 }
 
-export function WriteSecurelyLogo({ children }) {
+export function WriteSecurelyLogo({ children, className, type = 1 }) {
     return (
-        <i class="WriteSecurelyLogo">{ children }</i>
+        <i class={`WriteSecurelyLogo WriteSecurelyLogo-${type} ${className}`}>{ children }</i>
     )
 }

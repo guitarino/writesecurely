@@ -4,6 +4,7 @@ import { WelcomePage } from "../WelcomePage";
 import { pages } from "../../data/urls";
 import { DiarySelection } from "../DiarySelection";
 import { NotFoundPage } from "../NotFoundPage";
+import { PasswordEntry } from "../PasswordEntry";
 
 export function WriteSecurely({
     location,

@@ -9,6 +9,6 @@ export function setPassword(password) {
             type: SET_PASSWORD,
             password
         });
-        dispatch(push(urls.diary_selection));
+        // dispatch(push(urls.diary_selection));
     }
 }

@@ -9,8 +9,12 @@ export function WriteSecurelyLabel({ hasLogo = true }) {
     )
 }
 
-export function WriteSecurelyLogo({ children, className, type = 1 }) {
+export function WriteSecurelyLogo({ children, className, type }) {
     return (
-        <i class={`WriteSecurelyLogo WriteSecurelyLogo-${type} ${className}`}>{ children }</i>
+        <i class={`WriteSecurelyLogo ${
+            type === "full-feather" ?
+            "WriteSecurelyLogo__FullFeather" :
+            ""
+        } ${className}`}>{children}</i>
     )
 }

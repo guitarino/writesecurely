@@ -12,8 +12,8 @@ export class PasswordEntry extends Component {
                         Choose a password or enter the password you have chosen previously.
                     </div>
                     <div class="PasswordEntry__InputContainer">
-                        <WriteSecurelyLogo className='PasswordEntry__InputLogo' type="2" />
-                        <input class="PasswordEntry__Input" type="password" onInput={this.setPassword} value={this.state.password} />
+                        <WriteSecurelyLogo className='PasswordEntry__InputLogo' type="full-feather" />
+                        <input class="PasswordEntry__Input" type="password" onInput={this.setPassword} value={this.state.password} ref={this.saveRef} />
                     </div>
                     {
                         !this.state.isPasswordValid ?
@@ -45,6 +45,9 @@ export class PasswordEntry extends Component {
         if (this.checkPassword()) {
             this.props.setPassword(this.state.password);
         }
+        else {
+            this.focusOnPasswordInput();
+        }
     }
 
     checkPassword() {
@@ -53,5 +56,19 @@ export class PasswordEntry extends Component {
             isPasswordValid
         }));
         return isPasswordValid;
+    }
+
+    saveRef = (ref) => {
+        this.inputRef = ref;
+    }
+
+    focusOnPasswordInput() {
+        if (this.inputRef) {
+            this.inputRef.focus();
+        }
+    }
+
+    componentDidMount() {
+        this.focusOnPasswordInput();
     }
 }

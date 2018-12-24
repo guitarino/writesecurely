@@ -42,7 +42,7 @@ export function fetchGitlab(request) {
                 })
                 .then(response => {
                     if (response.status === 201) {
-                        return project;
+                        return response.json();
                     }
                     else {
                         throw {

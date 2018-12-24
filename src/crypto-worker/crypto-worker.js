@@ -9,16 +9,16 @@ self.addEventListener("message", (e) => {
 
     if (action.type === "encrypt") {
         try {
-            const iv = getRandomIV();
-            const ivHex = aesjs.utils.hex.fromBytes(iv);
+            const counter = getRandom(0, 256);
+            const aesCtr = new aesjs.Counter(counter);
             const textBytes = aesjs.utils.utf8.toBytes(action.text);
-            const aesCbc = new aesjs.ModeOfOperation.cbc(action.hash, iv);
+            const aesCbc = new aesjs.ModeOfOperation.ctr(action.hash, aesCtr);
             const encryptedBytes = aesCbc.encrypt(textBytes);
             const encryptedHex = aesjs.utils.hex.fromBytes(encryptedBytes);
             self.postMessage({
                 type: "encrypt-result",
                 requestId: action.requestId,
-                result: `${ivHex};${encryptedHex}`
+                result: `${counter};${encryptedHex}`
             });
         }
         catch (error) {
@@ -32,10 +32,10 @@ self.addEventListener("message", (e) => {
 
     if (action.type === "decrypt") {
         try {
-            const [ ivHex, contentHex ] = action.text.split(";");
-            const iv = aesjs.utils.hex.toBytes(ivHex);
+            const [ counter, contentHex ] = action.text.split(";");
+            const aesCtr = new aesjs.Counter(Number(counter));
             const encryptedBytes = aesjs.utils.hex.toBytes(contentHex);
-            const aesCbc = new aesjs.ModeOfOperation.cbc(action.hash, iv);
+            const aesCbc = new aesjs.ModeOfOperation.ctr(action.hash, aesCtr);
             const decryptedBytes = aesCbc.decrypt(encryptedBytes);
             const decryptedText = aesjs.utils.utf8.fromBytes(decryptedBytes);
             self.postMessage({
@@ -56,12 +56,4 @@ self.addEventListener("message", (e) => {
 
 function getRandom(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function getRandomIV() {
-    const iv = [];
-    for (var i = 0; i < 16; i++) {
-        iv.push(getRandom(0, 256));
-    }
-    return iv;
 }

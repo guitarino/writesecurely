@@ -1,5 +1,5 @@
 import { fetchGitlabFile, saveEncryptedFile } from "../api/gitlab";
-import { decrypt } from "../crypto-worker";
+import { decrypt, getHash, encrypt } from "../crypto-worker";
 
 const PASSWORD_FILE = "password.ws";
 
@@ -44,7 +44,10 @@ export function setPassword(password) {
                     ;
                 }
                 else if (response.status === 404) {
-                    return saveEncryptedFile(PASSWORD_FILE, createPasswordFileContent())
+                    return encrypt(createPasswordFileContent(), hash)
+                        .then(passwordFileContent => {
+                            return saveEncryptedFile(PASSWORD_FILE, passwordFileContent);
+                        })
                         .then(response => {
                             if (response.status !== 201) {
                                 throw {
@@ -58,7 +61,7 @@ export function setPassword(password) {
                 else {
                     throw {
                         type: 'request_error',
-                        description: 'Could verify a password file'
+                        description: 'Could not verify the password'
                     };
                 }
             })

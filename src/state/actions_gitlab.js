@@ -1,7 +1,7 @@
 import { gitlabOauthUri, gitlabOauthClientId, gitlabOauthRedirectUri } from "Config";
 import { redirect, replace } from "./actions_history.js";
 import { saveCredentials } from "./actions_credentials.js";
-import { urls } from "../data/urls.js";
+import { urls, pages } from "../data/urls.js";
 
 export function login() {
     return function(dispatch) {
@@ -23,7 +23,7 @@ export function saveCredentialsFromOauthAndRedirect(state, dispatch) {
             hashQuery
         },
         function ({ searchQuery, hashQuery }) {
-            if (searchQuery.page === "oauth_redirect") {
+            if (searchQuery.page === pages.oauth_redirect) {
                 if (hashQuery.access_token) {
                     dispatch(saveCredentials({
                         status: 'authenticated',
@@ -53,46 +53,6 @@ export function saveCredentialsFromOauthAndRedirect(state, dispatch) {
                     if (!searchQuery.page) {
                         dispatch(replace(urls.password_entry));
                     }
-                }
-            }
-        }
-    ];
-}
-
-export function redirectWhenAuthenticated(state, dispatch) {
-    const { searchQuery, hashQuery } = state.location;
-    return [
-        {
-            searchQuery,
-            hashQuery
-        },
-        function ({ searchQuery, hashQuery }) {
-            if (searchQuery.page === "oauth_redirect") {
-                if (hashQuery.access_token) {
-                    dispatch(saveCredentials({
-                        status: 'authenticated',
-                        token: hashQuery.access_token
-                    }));
-                    sessionStorage.setItem(
-                        "authToken",
-                        hashQuery.access_token
-                    );
-                }
-                else {
-                    dispatch(saveCredentials({
-                        status: 'error',
-                        error: hashQuery.error || 'unknown',
-                        errorDescription: hashQuery.error_description || "No description."
-                    }));
-                }
-            }
-            else {
-                const storedToken = sessionStorage.getItem("authToken");
-                if (storedToken) {
-                    dispatch(saveCredentials({
-                        status: 'authenticated',
-                        token: storedToken
-                    }));
                 }
             }
         }

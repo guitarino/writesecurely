@@ -2,7 +2,7 @@ import { h, render } from "preact";
 import { WriteSecurely as WriteSecurelyPresenter } from "./WriteSecurely";
 import { Provider, connect } from "preact-redux";
 import { store } from "../../state/store";
-import "../../state/store_derived";
+import "../../state/store_memoized";
 
 function mapStateToProps(state) {
     return {

@@ -1,5 +1,7 @@
 import { fetchGitlabFile, saveEncryptedFile } from "../api/gitlab";
 import { decrypt, getHash, encrypt } from "../crypto-worker";
+import { push, replace } from "./actions_history";
+import { pages, urls, passwordRequiredPages } from "../data/urls";
 
 const PASSWORD_FILE = "password.ws";
 
@@ -82,4 +84,31 @@ export function setPassword(password) {
             })
         ;
     }
+}
+
+export function redirectToDiarySelectionWhenPasswordVerified(state, dispatch) {
+    const { searchQuery, pathname, search } = state.location;
+    const { hash } = state;
+    const { page } = searchQuery;
+    const { status, returnUrl } = hash;
+    return [
+        { page, status, returnUrl, pathname, search },
+        ({ page, status, returnUrl, pathname, search }) => {
+            if (status === 'VERIFIED' && page === pages.password_entry) {
+                if (returnUrl) {
+                    dispatch(replace(returnUrl));
+                }
+                else {
+                    dispatch(push(urls.diary_selection));
+                }
+            }
+            else if (status !== 'VERIFIED' && ~passwordRequiredPages.indexOf(page)) {
+                dispatch({
+                    type: 'SET_RETURN_URL',
+                    url: `${pathname}${search}`
+                });
+                dispatch(replace(urls.password_entry));
+            }
+        }
+    ]
 }

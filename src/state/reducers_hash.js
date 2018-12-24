@@ -1,9 +1,11 @@
 export function hashReducer(state = {
     status: 'NOT_PROVIDED',
-    hash: null
+    hash: null,
+    returnUrl: null
 }, action) {
     if (action.type === "SET_PASSWORD_VERIFY") {
         return {
+            ...state,
             status: 'VERIFYING',
             hash: action.hash
         }
@@ -19,6 +21,12 @@ export function hashReducer(state = {
             ...state,
             status: 'INCORRECT'
         };
+    }
+    else if (action.type === "SET_RETURN_URL") {
+        return {
+            ...state,
+            returnUrl: action.url
+        }
     }
     else {
         return state;

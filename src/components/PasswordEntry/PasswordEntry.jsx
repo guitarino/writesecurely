@@ -1,10 +1,13 @@
 import { h, Component } from "preact";
-
 import "./PasswordEntry.scss";
 import { WriteSecurelyLogo } from "../WriteSecurelyLogo/WriteSecurelyLogo";
+import { Spinner } from "../Spinner/Spinner";
+import { KeyboardListener } from "../WindowListener/KeyboardListener";
 
 export class PasswordEntry extends Component {
     render() {
+        const { isPasswordValid } = this.state;
+        const { status } = this.props;
         return (
             <div class="PasswordEntry">
                 <div class="PasswordEntry__Content">
@@ -16,13 +19,36 @@ export class PasswordEntry extends Component {
                         <input class="PasswordEntry__Input" type="password" onInput={this.setPassword} value={this.state.password} ref={this.saveRef} />
                     </div>
                     {
-                        !this.state.isPasswordValid ?
+                        !isPasswordValid || status === 'INCORRECT' ?
+
                         <div class="PasswordEntry__Error">
-                            Password must have at least 1 letter
+                            {
+                                !isPasswordValid ?
+                                'Password must have at least 1 letter' :
+
+                                status === 'INCORRECT' ?
+                                'The provided password is invalid' :
+
+                                null
+                            }
                         </div> :
+
                         null
                     }
-                    <button class="PasswordEntry__Submit" onClick={this.onPasswordSubmit}>Submit</button>
+                    <button class="PasswordEntry__Submit" onClick={
+                        status !== 'VERIFYING' ?
+                        this.onPasswordSubmit :
+                        undefined
+                    }>
+                    {
+                        status === 'VERIFYING' ?
+                        <Spinner color="#333" height={12} /> :
+                        [
+                            'Submit',
+                            <KeyboardListener keycode={13} listener={this.onPasswordSubmit} />
+                        ]
+                    }
+                    </button>
                 </div>
             </div>
         )

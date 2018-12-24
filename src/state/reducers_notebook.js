@@ -1,25 +1,25 @@
-import { FETCH_DIARIES_ERROR, FETCH_DIARIES_SUCCESS, FETCH_DIARIES_LOADING } from "./actions_diary";
+import { FETCH_NOTEBOOKS_ERROR, FETCH_NOTEBOOKS_SUCCESS, FETCH_NOTEBOOKS_LOADING } from "./actions_notebook";
 
-export function diaryReducer(diaries = {
+export function notebookReducer(notebooks = {
     status: null,
     list: [],
     error: null,
 }, action) {
-    if (action.type === FETCH_DIARIES_LOADING) {
+    if (action.type === FETCH_NOTEBOOKS_LOADING) {
         return {
             status: "LOADING",
             list: [],
             error: null
         }
     }
-    else if (action.type === FETCH_DIARIES_ERROR) {
+    else if (action.type === FETCH_NOTEBOOKS_ERROR) {
         return {
             status: "ERROR",
             list: [],
             error: action.error
         }
     }
-    else if (action.type === FETCH_DIARIES_SUCCESS) {
+    else if (action.type === FETCH_NOTEBOOKS_SUCCESS) {
         return {
             status: "SUCCESS",
             list: action.payload,
@@ -27,6 +27,6 @@ export function diaryReducer(diaries = {
         }
     }
     else {
-        return diaries;
+        return notebooks;
     }
 }

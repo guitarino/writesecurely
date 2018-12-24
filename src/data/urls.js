@@ -1,17 +1,17 @@
 export const pages = {
     oauth_redirect: 'oauth_redirect',
     welcome_page: 'welcome_page',
-    diary_selection: 'diary_selection',
+    notebook_selection: 'notebook_selection',
     password_entry: 'password_entry',
 }
 
 export const passwordRequiredPages = [
-    pages.diary_selection,
+    pages.notebook_selection,
 ]
 
 export const urls = {
     password_entry: createPageUrl(pages.password_entry),
-    diary_selection: createPageUrl(pages.diary_selection),
+    notebook_selection: createPageUrl(pages.notebook_selection),
 }
 
 function createPageUrl(page) {

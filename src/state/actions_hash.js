@@ -86,7 +86,7 @@ export function setPassword(password) {
     }
 }
 
-export function redirectToDiarySelectionWhenPasswordVerified(state, dispatch) {
+export function redirectToNotebookSelectionWhenPasswordVerified(state, dispatch) {
     const { searchQuery, pathname, search } = state.location;
     const { hash } = state;
     const { page } = searchQuery;
@@ -99,7 +99,7 @@ export function redirectToDiarySelectionWhenPasswordVerified(state, dispatch) {
                     dispatch(replace(returnUrl));
                 }
                 else {
-                    dispatch(push(urls.diary_selection));
+                    dispatch(push(urls.notebook_selection));
                 }
             }
             else if (status !== 'VERIFIED' && ~passwordRequiredPages.indexOf(page)) {

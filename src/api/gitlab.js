@@ -8,7 +8,7 @@ export function fetchGitlab(request) {
     let { credentials } = store.getState();
     const authorization = `Bearer ${credentials.token}`;
     if (!projectPromise) {
-        projectPromise = fetch(`${gitlabApiUri}/projects?owned=true&search=write-securely-diaries`, {
+        projectPromise = fetch(`${gitlabApiUri}/projects?owned=true&search=write-securely-notebooks`, {
             headers: {
                 authorization
             }
@@ -20,7 +20,7 @@ export function fetchGitlab(request) {
             else {
                 throw {
                     type: 'request_error',
-                    description: 'Could not fetch "write-securely-diaries" project'
+                    description: 'Could not fetch "write-securely-notebooks" project'
                 }
             }
         })
@@ -36,7 +36,7 @@ export function fetchGitlab(request) {
                         'content-type': 'application/json'
                     },
                     body: JSON.stringify({
-                        name: 'write-securely-diaries',
+                        name: 'write-securely-notebooks',
                         visibility: 'private'
                     })
                 })
@@ -47,7 +47,7 @@ export function fetchGitlab(request) {
                     else {
                         throw {
                             type: 'request_error',
-                            description: 'Could not create "write-securely-diaries" project'
+                            description: 'Could not create "write-securely-notebooks" project'
                         }
                     }
                 });

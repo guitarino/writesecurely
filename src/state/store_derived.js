@@ -1,2 +1,2 @@
 export { saveCredentialsFromOauthAndRedirect } from "./actions_gitlab";
-export { redirectToDiarySelectionWhenPasswordVerified } from './actions_hash';
+export { redirectToNotebookSelectionWhenPasswordVerified } from './actions_hash';

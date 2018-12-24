@@ -2,7 +2,7 @@ import { h, Component } from "preact";
 import "./WriteSecurely.scss";
 import { WelcomePage } from "../WelcomePage";
 import { pages } from "../../data/urls";
-import { DiarySelection } from "../DiarySelection";
+import { NotebookSelection } from "../NotebookSelection";
 import { NotFoundPage } from "../NotFoundPage";
 import { PasswordEntry } from "../PasswordEntry";
 
@@ -22,8 +22,8 @@ export function WriteSecurely({
         searchQuery.page === pages.password_entry ?
         <PasswordEntry /> :
 
-        searchQuery.page === pages.diary_selection ?
-        <DiarySelection /> :
+        searchQuery.page === pages.notebook_selection ?
+        <NotebookSelection /> :
 
         <NotFoundPage />
     );

@@ -16,7 +16,14 @@ export class PasswordEntry extends Component {
                     </div>
                     <div class="PasswordEntry__InputContainer">
                         <WriteSecurelyLogo className='PasswordEntry__InputLogo' type="full-feather" />
-                        <input class="PasswordEntry__Input" type="password" onInput={this.setPassword} value={this.state.password} ref={this.saveRef} />
+                        <input
+                            size="1"
+                            type="password"
+                            class="PasswordEntry__Input"
+                            onInput={this.setPassword}
+                            value={this.state.password}
+                            ref={this.saveRef}
+                        />
                     </div>
                     {
                         !isPasswordValid || status === 'INCORRECT' ?

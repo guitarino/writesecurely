@@ -9,8 +9,8 @@ export class PasswordEntry extends Component {
         const { isPasswordValid } = this.state;
         const { status } = this.props;
         return (
-            <div class="PasswordEntry">
-                <div class="PasswordEntry__Content">
+            <article class="PasswordEntry">
+                <main class="PasswordEntry__Content">
                     <div class="PasswordEntry__Explanation">
                         Choose a password or enter the password you have chosen previously.
                     </div>
@@ -56,8 +56,8 @@ export class PasswordEntry extends Component {
                         ]
                     }
                     </button>
-                </div>
-            </div>
+                </main>
+            </article>
         )
     }
 

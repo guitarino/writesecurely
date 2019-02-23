@@ -44,7 +44,6 @@
     "preact": "^8.3.1",
     "preact-redux": "^2.0.3",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0",
-    "resize-sensor--preact": "^1.0.2"
+    "redux-thunk": "^2.3.0"
   }
 }

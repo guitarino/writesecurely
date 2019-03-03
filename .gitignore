@@ -60,6 +60,6 @@ typings/
 # next.js build output
 .next
 
-build/
-
+client-build/
 ideas/
+src-old/

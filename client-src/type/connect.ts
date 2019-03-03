@@ -1,0 +1,1 @@
+export { connect, observed, computed, effected } from "typeconnect/babel-legacy-decorators";

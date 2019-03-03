@@ -1,0 +1,27 @@
+{
+  "name": "writesecurely",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "main": "static/src/main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guitarino/writesecurely.git"
+  },
+  "author": "Kirill Shestakov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/guitarino/writesecurely/issues"
+  },
+  "homepage": "https://github.com/guitarino/writesecurely#readme",
+  "flat": true,
+  "dependencies": {
+    "@babel/runtime": "^7.3.4",
+    "aes-js": "^3.1.2",
+    "js-sha256": "^0.9.0",
+    "preact": "^8.4.2",
+    "query-string": "^6.2.0",
+    "typeconnect": "^0.1.1",
+    "typeinject": "^0.1.2"
+  }
+}

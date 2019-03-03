@@ -1,37 +1,37 @@
+const fs = require('fs');
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const babelrc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '.babelrc')));
 
 module.exports = {
     entry: {
-        "main": path.join(__dirname, 'src', 'main.js'),
-        "crypto-worker": path.join(__dirname, 'src', 'crypto-worker', 'crypto-worker.js')
+        'main': path.resolve(__dirname, 'client-src', 'main.ts'),
+        // 'crypto-worker': path.join(__dirname, 'src', 'crypto-worker', 'crypto-worker.js')
     },
-    mode: "development",
+    mode: 'development',
     output: {
         publicPath: './src/',
-        path: path.join(__dirname, './build/src'),
+        path: path.resolve(__dirname, 'client-build', 'src'),
         filename: '[name].js',
         chunkFilename: '[id].js',
     },
     resolve: {
-        extensions: ['.js', '.jsx', '.json'],
-        alias: {
-            Config: path.resolve(__dirname, "./config/dev.config.json")
-        }
+        modules: [
+            path.resolve(__dirname, 'client-src', 'node_modules')
+        ],
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
     },
     devtool: 'source-map',
     module: {
         rules: [
             {
-                test: /\.m?jsx?$/,
+                test: /\.(js|jsx|ts|tsx)$/,
                 exclude: /(node_modules|bower_components)/,
                 use: [{
                     loader: 'babel-loader',
-                    options:  {
-                        babelrc: true
-                    }
+                    options: babelrc
                 }]
             },
             {
@@ -46,13 +46,13 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin([
-            "build"
-        ], {
-            root: __dirname
-        }),
+            path.resolve(__dirname, 'client-build')
+        ]),
         new CopyWebpackPlugin([{
-            from: './static',
-            to: '../'
+            from:
+                path.resolve(__dirname, 'static'),
+            to:
+                path.resolve(__dirname, 'client-build')
         }]),
         new MiniCssExtractPlugin({
             filename: '[name].css',

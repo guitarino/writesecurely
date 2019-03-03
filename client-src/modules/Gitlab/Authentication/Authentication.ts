@@ -2,7 +2,7 @@ import { Authentication, AuthenticationStatus } from "../../Authentication/Authe
 import { dependency, inject } from "../../../type/inject";
 import { Location } from "../../Location/Location.types";
 import { Configuration } from "../Configuration/Configuration.types";
-import { observed, connect, effected } from "../../../type/connect";
+import { observed, connect } from "../../../type/connect";
 
 @dependency(Authentication.singleton)
 @inject(

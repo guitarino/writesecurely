@@ -1,4 +1,4 @@
-import { Authentication, AuthenticationStatus } from "../../Authentication/Authentication.types";
+import { Authentication } from "../../Authentication/Authentication.types";
 import { dependency, inject } from "../../../type/inject";
 import { Location } from "../../Location/Location.types";
 import { Configuration } from "../Configuration/Configuration.types";

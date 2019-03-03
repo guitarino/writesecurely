@@ -1,29 +1,29 @@
-import { Authentication } from "../../Authentication/Authentication.types";
 import { dependency, inject } from "../../../type/inject";
 import { Location } from "../../Location/Location.types";
-import { Configuration } from "../Configuration/Configuration.types";
+import { GitlabConfiguration } from "../GitlabConfiguration/GitlabConfiguration.types";
 import { observed, connect } from "../../../type/connect";
 import { QueryBuilder } from "../../QueryBuilder/QueryBuilder.types";
+import { GitlabAuthentication as IGitlabAuthentication } from "./GitlabAuthentication.types";
 
-@dependency(Authentication.singleton)
+@dependency(IGitlabAuthentication.singleton)
 @inject(
     Location,
-    Configuration,
+    GitlabConfiguration,
     QueryBuilder
 )
-class GitlabAuthentication implements Authentication {
+class GitlabAuthentication implements IGitlabAuthentication {
     private readonly location: Location;
-    private readonly configuration: Configuration;
+    private readonly configuration: GitlabConfiguration;
     private readonly queryBuilder: QueryBuilder;
 
-    constructor(location: Location, configuration: Configuration, queryBuilder: QueryBuilder) {
+    constructor(location: Location, configuration: GitlabConfiguration, queryBuilder: QueryBuilder) {
         this.location = location;
         this.configuration = configuration;
         this.queryBuilder = queryBuilder;
         connect(this);
     }
 
-    @observed data: Authentication['data'] = {
+    @observed data: IGitlabAuthentication['data'] = {
         status: 'Unauthorized'
     }
 

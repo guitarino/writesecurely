@@ -1,7 +1,7 @@
 import { type } from "../../../type/inject";
 
-export const Configuration = type<Configuration>();
-export interface Configuration {
+export const GitlabConfiguration = type<GitlabConfiguration>();
+export interface GitlabConfiguration {
     apiUri: string;
     oAuthUri: string;
     oAuthClientId: string;

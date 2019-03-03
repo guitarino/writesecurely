@@ -2,18 +2,18 @@ import { computed, observed, effected, connect } from "../../../type/connect";
 import { Location } from "../../Location/Location.types";
 import { dependency, inject } from "../../../type/inject";
 import { Intent } from "../../Intent/Intent.types";
-import { Authentication } from "../../Authentication/Authentication.types";
+import { GitlabAuthentication } from "./GitlabAuthentication.types";
 
 @dependency(Intent)
 @inject(
     Location,
-    Authentication
+    GitlabAuthentication
 )
-class AuthenticationIntent implements Intent {
+class GitlabAuthenticationIntent implements Intent {
     private readonly location: Location;
-    private readonly authentication: Authentication;
+    private readonly authentication: GitlabAuthentication;
 
-    constructor(location: Location, authentication: Authentication) {
+    constructor(location: Location, authentication: GitlabAuthentication) {
         this.location = location;
         this.authentication = authentication;
         connect(this);

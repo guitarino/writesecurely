@@ -22,16 +22,15 @@ class AuthenticationIntent implements Intent {
     @observed isCurrentIntentValid = false;
 
     @computed get isCurrentIntent() {
-        const query = this.location.searchQuery;
+        const query = this.location.query;
         return (
-            query &&
-            query.token === 'gitlab_oauth'
+            query.token_response === 'gitlab_oauth'
         );
     }
 
     @effected updateToken() {
         if (this.isCurrentIntentValid) {
-            const query = this.location.hashQuery;
+            const query = this.location.query;
             if (query.access_token) {
                 this.authentication.data = {
                     status: 'Authorized',

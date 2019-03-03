@@ -3,3 +3,4 @@ import "./modules/Gitlab/Authentication/AuthenticationIntent";
 import "./modules/Gitlab/Configuration/Configuration";
 import "./modules/Intent/IntentManager";
 import "./modules/Location/Location";
+import "./modules/QueryBuilder/QueryBuilder";

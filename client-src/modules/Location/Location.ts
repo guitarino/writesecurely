@@ -1,11 +1,15 @@
-import { Location as ILocation } from "./Location.types";
+import { Location as ILocation, QueryParameters } from "./Location.types";
 import { observed, computed, connect } from "../../type/connect";
-import { parse, stringify } from "query-string";
-import { dependency } from "../../type/inject";
+import { dependency, inject } from "../../type/inject";
+import { QueryBuilder } from "../QueryBuilder/QueryBuilder.types";
 
 @dependency(ILocation.singleton)
+@inject(QueryBuilder)
 class Location implements ILocation {
-    constructor() {
+    private readonly queryBuilder: QueryBuilder;
+
+    constructor(queryBuilder: QueryBuilder) {
+        this.queryBuilder = queryBuilder;
         window.addEventListener('popstate', this.onLocationChange);
         connect(this);
     }
@@ -20,16 +24,14 @@ class Location implements ILocation {
         return this.location.pathname;
     }
 
-    @computed get searchQuery() {
-        return parse(this.location.search);
-    }
-
-    @computed get hashQuery() {
-        return parse(this.location.hash);
-    }
-
-    buildQuery(object: Object) {
-        return stringify(object);
+    @computed get query() {
+        const { search, hash } = this.location;
+        const searchQuery: any = this.queryBuilder.getQueryFromString(search) || {};
+        const hashQuery: any = this.queryBuilder.getQueryFromString(hash) || {};
+        return {
+            ...searchQuery,
+            ...hashQuery
+        }
     }
     
     push(url: string) {

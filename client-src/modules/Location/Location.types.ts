@@ -7,9 +7,7 @@ export interface QueryParameters {
 export const Location = type<Location>();
 export interface Location {
     pathname: string;
-    searchQuery: QueryParameters;
-    hashQuery: QueryParameters;
-    buildQuery: (obj: Object) => void;
+    query: QueryParameters;
     push: (url: string) => void;
     replace: (url: string) => void;
     go: (steps: number) => void;

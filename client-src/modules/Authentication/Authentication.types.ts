@@ -4,7 +4,11 @@ export type AuthenticationStatus = 'Unauthorized' | 'Error' | 'Authorized';
 
 export const Authentication = type<Authentication>();
 export interface Authentication {
-    status: AuthenticationStatus;
-    token: string;
+    data: {
+        status: AuthenticationStatus;
+        token?: string;
+        error?: string;
+        errorDescription?: string;
+    }
     login: () => void;
 }

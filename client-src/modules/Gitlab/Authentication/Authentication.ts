@@ -19,9 +19,9 @@ class GitlabAuthentication implements Authentication {
         connect(this);
     }
 
-    @observed status: AuthenticationStatus = 'Unauthorized';
-
-    @observed token;
+    @observed data: Authentication['data'] = {
+        status: 'Unauthorized'
+    }
 
     login() {
         this.location.redirect(

@@ -32,7 +32,18 @@ class AuthenticationIntent implements Intent {
     @effected updateToken() {
         if (this.isCurrentIntentValid) {
             const query = this.location.hashQuery;
-            this.authentication.token = query.access_token;
+            if (query.access_token) {
+                this.authentication.data = {
+                    status: 'Authorized',
+                    token: query.access_token
+                };
+            } else {
+                this.authentication.data = {
+                    status: 'Error',
+                    error: query.error || '',
+                    errorDescription: query.error_description || ''
+                }
+            }
         }
     }
 }

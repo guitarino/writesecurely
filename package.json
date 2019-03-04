@@ -6,7 +6,7 @@
   "main": "static/src/main.js",
   "scripts": {
     "yarn:install": "yarn install && cd client-src && yarn install",
-    "transpile": "node client-compile-scripts/transpile.js",
+    "transpile": "node client-compile-scripts/transpile.js --root-dir client-src --out-dir client-transpiled",
     "transpile:watch": "yarn run transpile -- --watch --source-map",
     "build:dev": "yarn run transpile --source-map && concurrently \"yarn run transpile:watch -- --ignore-initial\" \"webpack -w\"",
     "start:dev": "http-server ./client-build/ -c 0",

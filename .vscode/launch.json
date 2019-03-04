@@ -9,13 +9,15 @@
             "request": "launch",
             "name": "WriteSecurely",
             "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}",
+            "webRoot": "${workspaceFolder}/client-src/",
             "sourceMapPathOverrides": {
                 "webpack:///./*": "${webRoot}/*",
                 "webpack:///src/*": "${webRoot}/*",
                 "webpack:///*": "*",
                 "webpack:///./~/*": "${webRoot}/node_modules/*",
-                "meteor://💻app/*": "${webRoot}/*"
+                "meteor://💻app/*": "${webRoot}/*",
+                "webpack:///./client-src/*": "${webRoot}/*",
+                "webpack:///client-src/*": "${webRoot}/*"
             }
         }
     ]

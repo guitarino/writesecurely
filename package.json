@@ -5,8 +5,10 @@
   "description": "",
   "main": "static/src/main.js",
   "scripts": {
-    "yarninstall": "yarn install && cd client-src && yarn install",
-    "build:dev": "webpack -w",
+    "yarn:install": "yarn install && cd client-src && yarn install",
+    "transpile": "node client-compile-scripts/transpile.js",
+    "transpile:watch": "yarn run transpile -- --watch --source-map",
+    "build:dev": "yarn run transpile --source-map && concurrently \"yarn run transpile:watch -- --ignore-initial\" \"webpack -w\"",
     "start:dev": "http-server ./client-build/ -c 0",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,6 +23,7 @@
   },
   "homepage": "https://github.com/guitarino/writesecurely#readme",
   "dependencies": {
+    "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.4",
     "@babel/plugin-proposal-class-properties": "^7.3.4",
     "@babel/plugin-proposal-decorators": "^7.3.0",
@@ -31,13 +34,17 @@
     "@babel/preset-typescript": "^7.3.3",
     "@types/node": "^11.10.4",
     "babel-loader": "^8.0.5",
+    "chokidar": "^2.1.2",
     "clean-webpack-plugin": "^1.0.1",
+    "concurrently": "^4.1.0",
     "copy-webpack-plugin": "^5.0.0",
     "css-loader": "^2.1.0",
     "http-server": "^0.11.1",
     "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.11.0",
+    "replace-ext": "^1.0.0",
     "sass-loader": "^7.1.0",
+    "source-map-loader": "^0.2.4",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3"
   }

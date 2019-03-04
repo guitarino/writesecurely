@@ -16,7 +16,6 @@
                 "webpack:///*": "*",
                 "webpack:///./~/*": "${webRoot}/node_modules/*",
                 "meteor://💻app/*": "${webRoot}/*",
-                "webpack:///./client-src/*": "${webRoot}/*",
                 "webpack:///client-src/*": "${webRoot}/*"
             }
         }

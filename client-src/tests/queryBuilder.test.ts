@@ -7,6 +7,6 @@ const queryBuilder: QueryBuilder = get<QueryBuilder>(QueryBuilder);
 
 describe('query builder', () => {
     it('is object', () => {
-        assert(typeof queryBuilder === "object");      
+        assert(typeof queryBuilder === "object");
     });
 });

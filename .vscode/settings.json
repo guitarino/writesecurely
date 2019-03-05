@@ -4,5 +4,7 @@
         "NODE_PATH": "client-src/node_modules"
     },
     "mochaExplorer.mochaPath": "node_modules/mocha",
-    "mochaExplorer.debuggerConfig": "Debug Mocha Tests"
+    "mochaExplorer.debuggerConfig": "Debug Mocha Tests",
+    "mochaExplorer.require": "mocha-isolation/register",
+    "mochaExplorer.logpanel": true
 }

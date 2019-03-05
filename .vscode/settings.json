@@ -3,5 +3,6 @@
     "mochaExplorer.env": {
         "NODE_PATH": "client-src/node_modules"
     },
+    "mochaExplorer.mochaPath": "node_modules/mocha",
     "mochaExplorer.debuggerConfig": "Debug Mocha Tests"
 }

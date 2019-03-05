@@ -2,5 +2,6 @@
     "mochaExplorer.files": "client-transpiled/**/*.test.js",
     "mochaExplorer.env": {
         "NODE_PATH": "client-src/node_modules"
-    }
+    },
+    "mochaExplorer.debuggerConfig": "Debug Mocha Tests"
 }

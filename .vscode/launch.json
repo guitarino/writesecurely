@@ -21,19 +21,15 @@
         },
         {
             "type": "node",
-            "request": "launch",
-            "cwd": "${workspaceFolder}/client-src",
-            "name": "Run Current Test",
-            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-            "args": [
-                "${workspaceFolder}/client-transpiled/tests/${fileBasenameNoExtension}.js"
-            ],
-            "console": "integratedTerminal",
-            "env": {
-                "NODE_PATH": "${workspaceFolder}/client-src/node_modules"
-            },
-            "internalConsoleOptions": "neverOpen",
-            "sourceMaps": true
+            "request": "attach",
+            "name": "Debug Mocha Tests",
+            "port": 9229,
+            "protocol": "inspector",
+            "timeout": 30000,
+            "stopOnEntry": false,
+            "sourceMapPathOverrides": {
+                "client-src/*": "${workspaceFolder}/client-src/*"
+            }
         }
     ]
 }

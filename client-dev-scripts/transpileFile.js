@@ -8,17 +8,21 @@ const { options } = require('./transpileOptions');
 
 module.exports.transpileFile = function transpileFile(fullPath) {
     const {
+        sourceRoot,
+        sourceBaseName,
         transpiledFolder,
         transpiledPath,
-        transpiledMapPath,
-        transpiledMapPathBaseName,
-        sourceMapData
+        transpiledPathRelativeToProject
     } = transpileConvertPath(fullPath);
-    const babelrc = process.argv.indexOf('--source-map') > 0 ?
+    const isSourceMapsAdded = process.argv.indexOf('--source-map') > 0;
+    const babelrc = isSourceMapsAdded ?
         {
             ...options.babelrc,
-            sourceMaps: true,
-            sourceFileName: transpiledMapPathBaseName
+            filename: transpiledPath,
+            filenameRelative: transpiledPathRelativeToProject,
+            sourceMaps: 'inline',
+            sourceFileName: sourceBaseName,
+            sourceRoot
         } :
         options.babelrc
     ;
@@ -26,23 +30,12 @@ module.exports.transpileFile = function transpileFile(fullPath) {
         if (err) {
             logError(err)
         } else {
-            const { code, map } = result;
+            const { code } = result;
             mkdirp(transpiledFolder, (err) => {
                 if (err) {
                     logError(err)
                 } else {
-                    if (map) {
-                        fs.writeFile(transpiledMapPath, JSON.stringify({
-                            ...map,
-                            ...sourceMapData
-                        }), (err) => {
-                            if (err) {
-                                logError(err)
-                            }
-                            console.log(`[${+new Date()}] Saved source map ${transpiledMapPath}`);
-                        });
-                    }
-                    fs.writeFile(transpiledPath, `${code}\n//# sourceMappingURL=${transpiledMapPathBaseName}`, (err) => {
+                    fs.writeFile(transpiledPath, code, (err) => {
                         if (err) {
                             logError(err)
                         }

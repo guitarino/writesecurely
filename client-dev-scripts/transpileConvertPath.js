@@ -5,20 +5,17 @@ const { options } = require('./transpileOptions');
 module.exports.transpileConvertPath = function transpileConvertPath(fullPath) {
     const relativePath = path.relative(options.root, fullPath);
     const outFullPath = path.join(options.outDir, relativePath);
+    const sourceRoot = path.dirname(fullPath);
+    const sourceBaseName = path.basename(fullPath);
     const transpiledPath = replaceExt(outFullPath, '.js');
-    const transpiledMapPath = replaceExt(outFullPath, '.js.map');
     const transpiledFolder = path.dirname(transpiledPath);
-    const transpiledMapPathBaseName = path.basename(transpiledMapPath);
-    const sourceMapData = {
-        sources: [path.relative(options.projectRoot, fullPath).replace(/\\/g, '/')],
-        file: path.basename(transpiledPath)
-    };
+    const transpiledPathRelativeToProject = path.relative(options.projectRoot, transpiledPath);
     return {
+        sourceRoot,
+        sourceBaseName,
         transpiledFolder,
         transpiledPath,
-        transpiledMapPath,
-        transpiledMapPathBaseName,
-        sourceMapData
+        transpiledPathRelativeToProject
     }
 }
 

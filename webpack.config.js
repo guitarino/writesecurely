@@ -6,8 +6,7 @@ const projectRoot = path.join(__dirname);
 
 module.exports = {
     entry: {
-        'main': path.resolve(projectRoot, 'client-transpiled', 'main.js'),
-        // 'crypto-worker': path.join(projectRoot, 'src', 'crypto-worker', 'crypto-worker.js')
+        'main': path.resolve(projectRoot, 'client-transpiled', 'main.js')
     },
     mode: 'development',
     output: {
@@ -27,6 +26,9 @@ module.exports = {
         rules: [
             {
                 test: /\.(jsx|js)$/,
+                exclude: [
+                    path.resolve(projectRoot, 'client-src', 'node_modules')
+                ],
                 use: ["source-map-loader"],
                 enforce: "pre"
             },

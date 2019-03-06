@@ -11,14 +11,7 @@ const { options } = require('./transpileOptions');
 const ignoreInitial = process.argv.indexOf('--ignore-initial') > 0;
 
 function deleteCorrespondingTranspiledFile(fullPath) {
-    const { transpiledPath, transpiledMapPath } = transpileConvertPath(fullPath);
-    rimraf(transpiledMapPath, function (err) {
-        if (err) {
-            logError(err)
-        } else {
-            console.log(`[${+new Date()}] Deleted ${transpiledMapPath}`);
-        }
-    });
+    const { transpiledPath } = transpileConvertPath(fullPath);
     rimraf(transpiledPath, function (err) {
         if (err) {
             logError(err)

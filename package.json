@@ -6,11 +6,12 @@
   "main": "static/src/main.js",
   "scripts": {
     "yarn:install": "yarn install && cd client-src && yarn install",
-    "transpile": "node client-compile-scripts/transpile.js --root-dir client-src --out-dir client-transpiled",
+    "transpile": "node client-dev-scripts/transpile.js --root-dir client-src --out-dir client-transpiled",
     "transpile:watch": "yarn run transpile -- --watch --source-map",
     "build:dev": "yarn run transpile --source-map && concurrently \"yarn run transpile:watch -- --ignore-initial\" \"webpack -w\"",
     "start:dev": "http-server ./client-build/ -c 0",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:only": "cross-env NODE_PATH=client-src/node_modules nyc mocha client-transpiled/**/*.test.js --require mocha-isolation/register",
+    "test": "yarn run yarn:install && yarn run transpile -- --source-map && yarn run test:only"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,11 @@
     "url": "https://github.com/guitarino/writesecurely/issues"
   },
   "homepage": "https://github.com/guitarino/writesecurely#readme",
+  "nyc": {
+    "include": [
+      "client-transpiled/**/*.js"
+    ]
+  },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.4",
@@ -39,12 +45,14 @@
     "clean-webpack-plugin": "^1.0.1",
     "concurrently": "^4.1.0",
     "copy-webpack-plugin": "^5.0.0",
+    "cross-env": "^5.2.0",
     "css-loader": "^2.1.0",
     "http-server": "^0.11.1",
     "mini-css-extract-plugin": "^0.5.0",
     "mocha": "^6.0.2",
     "mocha-isolation": "^0.1.5",
     "node-sass": "^4.11.0",
+    "nyc": "^13.3.0",
     "replace-ext": "^1.0.0",
     "sass-loader": "^7.1.0",
     "source-map-loader": "^0.2.4",

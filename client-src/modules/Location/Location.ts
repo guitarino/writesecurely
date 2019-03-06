@@ -1,4 +1,4 @@
-import { Location as ILocation, QueryParameters } from "./Location.types";
+import { Location as ILocation } from "./Location.types";
 import { observed, computed, connect } from "../../type/connect";
 import { dependency, inject } from "../../type/inject";
 import { QueryBuilder } from "../QueryBuilder/QueryBuilder.types";

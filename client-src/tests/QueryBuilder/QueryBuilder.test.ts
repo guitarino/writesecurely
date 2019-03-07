@@ -6,7 +6,7 @@ import assert from 'assert';
 describe('QueryBuilder', () => {
     const queryBuilder: QueryBuilder = get<QueryBuilder>(QueryBuilder);
 
-    it('getStringFromQuery works as expected', () => {
+    it('getStringFromQuery converts url query object to string', () => {
         const query = { happy: 'birthday', hello: 'world' };
         const expectedResult = "happy=birthday&hello=world";
         assert.strictEqual(
@@ -15,7 +15,7 @@ describe('QueryBuilder', () => {
         );
     });
 
-    it('getQueryFromString', () => {
+    it('getQueryFromString converts url query string to object', () => {
         const string = "happy=birthday&hello=world";
         const expectedResult = { happy: 'birthday', hello: 'world' };
         assert.deepEqual(

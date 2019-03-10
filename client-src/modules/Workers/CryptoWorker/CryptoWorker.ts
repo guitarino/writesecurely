@@ -1,15 +1,15 @@
-import aesjs from 'aes-js';
-import { Worker } from '../Worker';
-import { getRandom } from './utils/getRandom';
-import { DecryptData, EncryptData, EncryptResult, DecryptResult, EncryptError, DecryptError } from './CryptoWorker.types';
+import aesjs from "aes-js";
+import { getRandom } from "./utils/getRandom";
+import { DecryptData, EncryptData, EncryptResult, DecryptResult, EncryptError, DecryptError } from "./CryptoWorker.types";
+import { Worker } from "../Worker.types";
 
-export class CryptoWorker extends Worker {
-    onMessage(data: EncryptData | DecryptData) {
+export class CryptoWorker implements Worker {
+    async processData(data: EncryptData | DecryptData): Promise<EncryptResult | EncryptError | DecryptResult | DecryptError | void> {
         if (data.action === 'encrypt') {
-            this.postMessage(this.getEncryptOrErrorMessage(data));
+            return Promise.resolve(this.getEncryptOrErrorMessage(data));
         }
         if (data.action === 'decrypt') {
-            this.postMessage(this.getDecryptOrErrorMessage(data));
+            return Promise.resolve(this.getDecryptOrErrorMessage(data));
         }
     }
 

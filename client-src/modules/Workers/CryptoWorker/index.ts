@@ -1,7 +1,9 @@
 import { CryptoWorker } from "./CryptoWorker";
+import { WorkerAssigner } from "../WorkerAssigner";
 
 function initializeWorker() {
-    new CryptoWorker();
+    const cryptoWorker = new CryptoWorker();
+    new WorkerAssigner(cryptoWorker);
 }
 
 initializeWorker();

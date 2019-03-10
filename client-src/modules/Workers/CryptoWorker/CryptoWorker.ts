@@ -54,7 +54,7 @@ export class CryptoWorker implements Worker {
     }
 
     private encrypt(data: EncryptData): string {
-        const counter = getRandom(0, 256);
+        const counter = getRandom(0, 255);
         const aesCtr = new aesjs.Counter(counter);
         const textBytes = aesjs.utils.utf8.toBytes(data.text);
         const aesCbc = new aesjs.ModeOfOperation.ctr(data.hash, aesCtr);

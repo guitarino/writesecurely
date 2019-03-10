@@ -709,6 +709,11 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
+"@types/aes-js@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@types/aes-js/-/aes-js-3.1.0.tgz#28175b1be1a4df371098b25f94aac35a4c02bfa7"
+  integrity sha512-zHvLJrMxaisU/kyPtfLCsEciFWSbAxmEGdBHta+Zarz/QcBewFTywoyG9HhT57aseDfPgG0dEcGlVU1+fN94ng==
+
 "@types/mocha@^5.2.6":
   version "5.2.6"
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-5.2.6.tgz#b8622d50557dd155e9f2f634b7d68fd38de5e94b"

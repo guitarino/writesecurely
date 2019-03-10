@@ -6,7 +6,8 @@ const projectRoot = path.join(__dirname);
 
 module.exports = {
     entry: {
-        'main': path.resolve(projectRoot, 'client-transpiled', 'main.js')
+        'main': path.resolve(projectRoot, 'client-transpiled', 'main.js'),
+        "crypto-worker": path.join(projectRoot, 'client-transpiled', 'modules', 'Workers', 'CryptoWorker', 'index.js')
     },
     mode: 'development',
     output: {

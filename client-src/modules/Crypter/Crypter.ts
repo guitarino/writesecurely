@@ -36,8 +36,8 @@ class Crypter implements ICrypter {
         actionType: 'encrypt' | 'decrypt',
         resolve: (result: string) => void,
         reject: (result: string) => void
-    ): (e: any) => void {
-        const listener = (e) => {
+    ): (e: MessageEvent) => void {
+        const listener = (e: MessageEvent) => {
             const data: EncryptResult | EncryptError | DecryptResult | DecryptError = e.data;
             if (data.requestId === requestId) {
                 if (data.type === `${actionType}-result`) {

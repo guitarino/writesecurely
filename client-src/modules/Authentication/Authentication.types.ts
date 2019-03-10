@@ -10,5 +10,8 @@ export interface Authentication {
         error?: string;
         errorDescription?: string;
     }
-    login: () => void;
+    login();
+    onLoginSucceeded(token: string);
+    onLoginFailed(error: string, errorDescription: string);
+    logout();
 }

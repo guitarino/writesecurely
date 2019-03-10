@@ -12,14 +12,13 @@ import { GitlabAuthentication } from "./GitlabAuthentication.types";
 class GitlabAuthenticationIntent implements Intent {
     private readonly location: Location;
     private readonly authentication: GitlabAuthentication;
+    @observed public isCurrentIntentValid = false;
 
     constructor(location: Location, authentication: GitlabAuthentication) {
         this.location = location;
         this.authentication = authentication;
         connect(this);
     }
-
-    @observed isCurrentIntentValid = false;
 
     @computed get isCurrentIntent() {
         const query = this.location.query;
@@ -28,20 +27,16 @@ class GitlabAuthenticationIntent implements Intent {
         );
     }
 
-    @effected updateToken() {
+    @effected private notifyAuthentication() {
         if (this.isCurrentIntentValid) {
             const query = this.location.query;
             if (query.access_token) {
-                this.authentication.data = {
-                    status: 'Authorized',
-                    token: query.access_token
-                };
+                this.authentication.onLoginSucceeded(query.access_token);
             } else {
-                this.authentication.data = {
-                    status: 'Error',
-                    error: query.error || '',
-                    errorDescription: query.error_description || ''
-                }
+                this.authentication.onLoginFailed(
+                    query.error || '',
+                    query.error_description || ''
+                );
             }
         }
     }

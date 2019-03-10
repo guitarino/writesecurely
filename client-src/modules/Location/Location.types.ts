@@ -8,10 +8,10 @@ export const Location = type<Location>();
 export interface Location {
     pathname: string;
     query: QueryParameters;
-    push: (url: string) => void;
-    replace: (url: string) => void;
-    go: (steps: number) => void;
-    goBack: () => void;
-    goForward: () => void;
-    redirect: (url: string) => void;
+    push(url: string);
+    replace(url: string);
+    go(steps: number);
+    goBack();
+    goForward();
+    redirect(url: string);
 }

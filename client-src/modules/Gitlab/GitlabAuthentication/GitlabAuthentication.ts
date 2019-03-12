@@ -24,19 +24,19 @@ class GitlabAuthentication implements IGitlabAuthentication {
         this.configuration = configuration;
         this.queryBuilder = queryBuilder;
         this.authStorage = authStorage;
-        this.populateDataIfStored();
+        this.data = this.getInitialStoredData();
         connect(this);
     }
 
-    private populateDataIfStored() {
+    private getInitialStoredData(): IGitlabAuthentication['data'] {
         const storedToken = this.authStorage.getToken();
         if (typeof storedToken === 'string') {
-            this.data = {
+            return {
                 status: 'Authorized',
                 token: storedToken
             };
         } else {
-            this.data = {
+            return {
                 status: 'Unauthorized'
             }
         }

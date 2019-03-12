@@ -4,8 +4,7 @@ import { dependency } from "../../../type/inject";
 @dependency(IGitlabAuthStorage)
 class GitlabAuthStorage implements IGitlabAuthStorage {
     getToken() {
-        const storedToken = window.localStorage.getItem('token');
-        return storedToken;
+        return window.localStorage.getItem('token');
     }
 
     setToken(token: string) {

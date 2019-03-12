@@ -12,7 +12,7 @@ export class WorkerAssigner {
         const { data } = e;
         const result = await this.worker.processData(data);
         if (result !== undefined) {
-            // @ts-ignore: Typescript needs to improve their typings inside workers
+            // @ts-ignore: Typescript errors out because it doesn't know it is inside a worker
             self.postMessage(result);
         }
     }

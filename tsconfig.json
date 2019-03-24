@@ -10,6 +10,8 @@
 		"esModuleInterop": true,
 		"noImplicitAny": false,
 		"skipLibCheck": true,
+		"jsx": "react",
+		"jsxFactory": "h",
 		"strictPropertyInitialization": false,
 		"types": [
 			"node",

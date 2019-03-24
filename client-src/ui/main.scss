@@ -1,0 +1,16 @@
+@import "./style-mixins/flex.scss";
+
+html, body {
+    margin: 0;
+    @include flexParent;
+    @include flexChildExpand;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+#WriteSecurely {
+    @include flexParent;
+    height: 100vh;
+}

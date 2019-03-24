@@ -1,4 +1,5 @@
 const path = require('path');
+const { NormalModuleReplacementPlugin } = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -53,6 +54,12 @@ module.exports = {
             to:
                 path.resolve(projectRoot, 'client-build')
         }]),
+        new NormalModuleReplacementPlugin(
+            /\.(sc|sa|c)ss$/,
+            (resource) => {
+                resource.context = resource.context.replace('client-transpiled', 'client-src')
+            }
+        ),
         new MiniCssExtractPlugin({
             filename: '[name].css',
             chunkFilename: '[id].css'

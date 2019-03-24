@@ -25,8 +25,8 @@ export function WelcomePage({
                     <p class="WelcomePage__How">How does it work?</p>
                     <ol class="WelcomePage__HowList">
                         <li class="WelcomePage__HowListItem">Sign in via GitLab. GitLab is a service that allows you to create private / public repositories and store content inside of them.</li>
-                        <li class="WelcomePage__HowListItem">Choose a password used to encrypt notebooks and notes with AES-256 encryption.</li>
-                        <li class="WelcomePage__HowListItem">Create, edit and delete private notes, create and customize multiple notebooks. Nobody will be able to read your notebook without knowing the chosen password.</li>
+                        <li class="WelcomePage__HowListItem">Create a notebook and choose a password for it. Nobody will be able to read the contents of the notebook without knowing the password.</li>
+                        <li class="WelcomePage__HowListItem">Create, edit and delete private notes, create and customize multiple notebooks.</li>
                     </ol>
                 </section>
                 {

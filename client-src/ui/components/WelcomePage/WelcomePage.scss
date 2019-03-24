@@ -1,5 +1,6 @@
 @import "../../style-mixins/flex.scss";
 @import "../../style-mixins/background.scss";
+@import "../../style-mixins/button.scss";
 
 .WelcomePage {
     @include flexParent;
@@ -33,16 +34,13 @@
     }
 
     &__LoginButton {
+        @include buttonInit;
         display: inline-block;
-        cursor: pointer;
         width: 100%;
         background: rgba(255, 255, 255, 0.05);
-        outline: none;
-        border: none;
         border-top: 1px solid rgba(0, 0, 0, 0.3);
         padding: 24px;
         text-align: center;
-        font: inherit;
         font-weight: bold;
 
         &:hover {

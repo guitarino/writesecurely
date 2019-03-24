@@ -1,6 +1,8 @@
 import { h } from "preact";
-import { WelcomePage } from "../WelcomePage/WelcomePage";
+import { MainScreen } from "../MainScreen/MainScreen";
 
 export function WriteSecurely() {
-    return <WelcomePage login={() => {}} />;
+    return (
+        <MainScreen />
+    );
 }

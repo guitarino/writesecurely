@@ -1,0 +1,14 @@
+@import "../../style-mixins/flex.scss";
+
+.MainScreen {
+    @include flexParent(row);
+    @include flexChildExpand;
+
+    &__Sidebar {
+        @include flexChildCollapse;
+    }
+
+    &__Editor {
+        @include flexChildExpand;
+    }
+}

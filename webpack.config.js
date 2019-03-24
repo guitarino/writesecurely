@@ -55,7 +55,7 @@ module.exports = {
                 path.resolve(projectRoot, 'client-build')
         }]),
         new NormalModuleReplacementPlugin(
-            /\.(sc|sa|c)ss$/,
+            /(\.(sc|sa|c)ss|.json)$/,
             (resource) => {
                 resource.context = resource.context.replace('client-transpiled', 'client-src')
             }

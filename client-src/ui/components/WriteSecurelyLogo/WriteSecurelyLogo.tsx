@@ -5,7 +5,7 @@ export type WriteSecurelyLabelProps = {
     hasLogo?: boolean,
 }
 
-export function WriteSecurelyLabel({ hasLogo = true }: WriteSecurelyLabelProps) {
+export function WriteSecurelyLabel({ hasLogo = false }: WriteSecurelyLabelProps) {
     return (
         <div class="WriteSecurelyLabel">
             Write{
@@ -22,7 +22,7 @@ export function WriteSecurelyLabel({ hasLogo = true }: WriteSecurelyLabelProps) 
 }
 
 export type WriteSecurelyLogoProps = {
-    children: ComponentChildren,
+    children?: ComponentChildren,
     className?: string,
     type?: string
 }

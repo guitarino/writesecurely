@@ -16,9 +16,9 @@ export function WelcomePage({
     return (
         <main class="WelcomePage">
             <article class="WelcomePage__WelcomeCard">
-                <section class="WelcomePage__Header"><WriteSecurelyLabel /></section>
+                <section class="WelcomePage__Header"><WriteSecurelyLabel hasLogo /></section>
                 <section class="WelcomePage__Information">
-                    <p><WriteSecurelyLabel hasLogo={false} /> is a private note-taking web application.</p>
+                    <p><WriteSecurelyLabel /> is a private note-taking web application.</p>
                     <p>It allows you to create your own private notebooks and write encrypted notes.</p>
                 </section>
                 <section class="WelcomePage__HowSection">

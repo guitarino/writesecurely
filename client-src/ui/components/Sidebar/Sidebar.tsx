@@ -10,7 +10,6 @@ export type SidebarProps = {
     startWidth?: number,
     minWidth?: number,
     maxWidth?: number,
-    fullLabelMinWidth?: number
 }
 
 type SidebarState = {
@@ -18,7 +17,7 @@ type SidebarState = {
     width: number
 }
 
-class SidebarComponent extends Component<Required<SidebarProps>, SidebarState> {
+export class SidebarComponent extends Component<Required<SidebarProps>, SidebarState> {
     private dragStartPosition: number;
     private dragStartWidth: number;
 
@@ -29,7 +28,6 @@ class SidebarComponent extends Component<Required<SidebarProps>, SidebarState> {
         startWidth: 268,
         minWidth: 150,
         maxWidth: Infinity,
-        fullLabelMinWidth: 140
     }
     
     componentWillMount() {
@@ -40,9 +38,9 @@ class SidebarComponent extends Component<Required<SidebarProps>, SidebarState> {
     }
 
     render() {
-        const { className, children, contentClassName, fullLabelMinWidth } = this.props;
+        const { className, children, contentClassName } = this.props;
         const { isCollapsed, width } = this.state;
-        const isLabelShown = !isCollapsed || (width < fullLabelMinWidth);
+        const isLabelShown = !isCollapsed;
 
         return (
             <aside
@@ -51,7 +49,9 @@ class SidebarComponent extends Component<Required<SidebarProps>, SidebarState> {
                     width: `${width}px`
                 } : {}}
             >
-                <button class="Sidebar__ExpandCollapseButton" onClick={this.toggleCollapse}>
+                <button class="Sidebar__ExpandCollapseButton" onClick={this.toggleCollapse} style={{
+                    fontSize: `${this.getLogoFontSize()}px`
+                }}>
                     {
                         isLabelShown ?
                         <WriteSecurelyLabel hasLogo /> :
@@ -75,6 +75,10 @@ class SidebarComponent extends Component<Required<SidebarProps>, SidebarState> {
                 }
             </aside>
         )
+    }
+
+    getLogoFontSize() {
+        return this.state.width * 0.1;
     }
 
     toggleCollapse = () => {

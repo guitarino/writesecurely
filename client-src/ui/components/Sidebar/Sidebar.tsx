@@ -1,6 +1,7 @@
-import { h, Component, ComponentChildren } from "preact";
+import { h, Component, ComponentChildren, ComponentConstructor } from "preact";
 import "./Sidebar.scss";
 import { WriteSecurelyLabel, WriteSecurelyLogo } from "../WriteSecurelyLogo/WriteSecurelyLogo";
+import { OptionalOf } from "../../types/OptionalOf";
 
 export type SidebarProps = {
     className?: string,
@@ -8,36 +9,40 @@ export type SidebarProps = {
     children?: ComponentChildren,
     startWidth?: number,
     minWidth?: number,
-    maxWidth?: number
-};
+    maxWidth?: number,
+    fullLabelMinWidth?: number
+}
 
 type SidebarState = {
     isCollapsed: boolean,
     width: number
 }
 
-export class Sidebar extends Component<SidebarProps, SidebarState> {
+class SidebarComponent extends Component<Required<SidebarProps>, SidebarState> {
     private dragStartPosition: number;
     private dragStartWidth: number;
 
-    static defaultProps = {
+    static defaultProps: OptionalOf<SidebarProps> = {
+        children: null,
         className: '',
         contentClassName: '',
         startWidth: 268,
         minWidth: 150,
-        maxWidth: Infinity
+        maxWidth: Infinity,
+        fullLabelMinWidth: 140
     }
     
     componentWillMount() {
         this.state = {
             isCollapsed: false,
-            width: this.props.startWidth as number
+            width: this.props.startWidth
         }
     }
 
     render() {
-        const { className, children, contentClassName } = this.props;
+        const { className, children, contentClassName, fullLabelMinWidth } = this.props;
         const { isCollapsed, width } = this.state;
+        const isLabelShown = !isCollapsed || (width < fullLabelMinWidth);
 
         return (
             <aside
@@ -48,7 +53,7 @@ export class Sidebar extends Component<SidebarProps, SidebarState> {
             >
                 <button class="Sidebar__ExpandCollapseButton" onClick={this.toggleCollapse}>
                     {
-                        !isCollapsed ?
+                        isLabelShown ?
                         <WriteSecurelyLabel hasLogo /> :
                         <WriteSecurelyLogo />
                     }
@@ -56,7 +61,7 @@ export class Sidebar extends Component<SidebarProps, SidebarState> {
                 {
                     !isCollapsed ?
                     <div class={`Sidebar__Content ${contentClassName}`}>
-                        {children || null}
+                        {children}
                     </div> :
                     null
                 }
@@ -106,8 +111,8 @@ export class Sidebar extends Component<SidebarProps, SidebarState> {
     }
 
     capWidthBetweenMinAndMax(desiredWidth: number): number {
-        const maxWidth = this.props.maxWidth as number;
-        const minWidth = this.props.minWidth as number;
+        const maxWidth = this.props.maxWidth;
+        const minWidth = this.props.minWidth;
         if (desiredWidth > maxWidth) {
             return maxWidth;
         }
@@ -117,3 +122,5 @@ export class Sidebar extends Component<SidebarProps, SidebarState> {
         return desiredWidth;
     }
 }
+
+export const Sidebar = SidebarComponent as ComponentConstructor<SidebarProps, SidebarState>;

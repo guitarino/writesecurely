@@ -29,7 +29,7 @@ const editorSchema = new Schema({
 export class Editor extends Component<Required<EditorProps>, EditorComponentState> {
     static defaultProps: OptionalOf<EditorProps> = {
         className: '',
-        initialContent: ''
+        initialContent: '<p>Hello <b>World</b>!</p>'
     };
 
     private editorState: EditorState;
@@ -56,5 +56,9 @@ export class Editor extends Component<Required<EditorProps>, EditorComponentStat
         this.view = new EditorView(this.container, {
             state: this.editorState
         });
+    }
+
+    componentWillUnmount() {
+        this.view.destroy();
     }
 }

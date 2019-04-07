@@ -9,6 +9,13 @@
     }
 
     &__Editor {
+        @include flexParent;
         @include flexChildExpand;
+    }
+
+    &__EditorContent {
+        @include flexChildExpand;
+        flex-basis: 0px;
+        overflow: auto;
     }
 }

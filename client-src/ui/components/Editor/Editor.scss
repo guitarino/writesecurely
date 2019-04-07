@@ -1,0 +1,11 @@
+@import "../../style-mixins/flex.scss";
+
+.Editor {
+    @include flexParent;
+    padding: 16px;
+
+    > :first-child {
+        @include flexChildExpand;
+        outline: none;
+    }
+}

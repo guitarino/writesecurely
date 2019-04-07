@@ -44,12 +44,12 @@ export class Sidebar extends Component<Required<SidebarProps>, SidebarState> {
 
         return (
             <aside
-                class={`Sidebar ${isCollapsed ? `Sidebar--Collapsed` : ``} ${className}`}
+                className={`Sidebar ${isCollapsed ? `Sidebar--Collapsed` : ``} ${className}`}
                 style={!isCollapsed ? {
                     width: `${width}px`
                 } : {}}
             >
-                <button class="Sidebar__ExpandCollapseButton" onClick={this.toggleCollapse} style={{
+                <button className="Sidebar__ExpandCollapseButton" onClick={this.toggleCollapse} style={{
                     fontSize: `${this.getLogoFontSize()}px`
                 }}>
                     {
@@ -60,7 +60,7 @@ export class Sidebar extends Component<Required<SidebarProps>, SidebarState> {
                 </button>
                 {
                     !isCollapsed ?
-                    <div class={`Sidebar__Content ${contentClassName}`}>
+                    <div className={`Sidebar__Content ${contentClassName}`}>
                         {children}
                     </div> :
                     null
@@ -68,7 +68,7 @@ export class Sidebar extends Component<Required<SidebarProps>, SidebarState> {
                 {
                     !isCollapsed ?
                     <span
-                        class="Sidebar__DraggableEdge"
+                        className="Sidebar__DraggableEdge"
                         onMouseDown={this.onDragEdgeStart}
                     /> :
                     null

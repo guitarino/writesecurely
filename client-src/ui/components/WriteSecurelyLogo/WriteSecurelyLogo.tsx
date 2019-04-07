@@ -7,7 +7,7 @@ export type WriteSecurelyLabelProps = {
 
 export function WriteSecurelyLabel({ hasLogo = false }: WriteSecurelyLabelProps) {
     return (
-        <div class="WriteSecurelyLabel">
+        <div className="WriteSecurelyLabel">
             Write{
                 hasLogo ?
 
@@ -29,7 +29,7 @@ export type WriteSecurelyLogoProps = {
 
 export function WriteSecurelyLogo({ children = null, className = '', type }: WriteSecurelyLogoProps) {
     return (
-        <i class={
+        <i className={
             `WriteSecurelyLogo ${
                 type === "full-feather" ?
                 "WriteSecurelyLogo__FullFeather" :

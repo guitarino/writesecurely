@@ -14,3 +14,7 @@ html, body {
     @include flexParent;
     height: 100vh;
 }
+
+p, ol, ul {
+    margin: 0px;
+}

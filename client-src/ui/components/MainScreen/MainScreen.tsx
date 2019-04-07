@@ -1,12 +1,15 @@
 import { h } from "preact";
 import { Sidebar } from "../Sidebar/Sidebar";
 import "./MainScreen.scss";
+import { Editor } from "../Editor/Editor";
 
 export function MainScreen() {
     return (
-        <div class="MainScreen">
-        <Sidebar className="MainScreen__Sidebar">Sidebar</Sidebar>
-            <div class="MainScreen__Editor">Editor</div>
+        <div className="MainScreen">
+            <Sidebar className="MainScreen__Sidebar">Sidebar</Sidebar>
+            <div className="MainScreen__Editor">
+                <Editor className='MainScreen__EditorContent' />
+            </div>
         </div>
     )
 }

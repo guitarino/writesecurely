@@ -1,4 +1,4 @@
-import { h, Component, ComponentChildren, ComponentConstructor } from "preact";
+import { h, Component, ComponentChildren } from "preact";
 import "./Sidebar.scss";
 import { WriteSecurelyLabel, WriteSecurelyLogo } from "../WriteSecurelyLogo/WriteSecurelyLogo";
 import { OptionalOf } from "../../types/OptionalOf";
@@ -17,7 +17,7 @@ type SidebarState = {
     width: number
 }
 
-export class SidebarComponent extends Component<Required<SidebarProps>, SidebarState> {
+export class Sidebar extends Component<Required<SidebarProps>, SidebarState> {
     private dragStartPosition: number;
     private dragStartWidth: number;
 
@@ -126,5 +126,3 @@ export class SidebarComponent extends Component<Required<SidebarProps>, SidebarS
         return desiredWidth;
     }
 }
-
-export const Sidebar = SidebarComponent as ComponentConstructor<SidebarProps, SidebarState>;

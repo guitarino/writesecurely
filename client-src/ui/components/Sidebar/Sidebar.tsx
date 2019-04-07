@@ -78,7 +78,8 @@ export class Sidebar extends Component<Required<SidebarProps>, SidebarState> {
     }
 
     getLogoFontSize() {
-        return this.state.width * 0.1;
+        const cappedWidth = Math.min(this.props.startWidth, this.state.width);
+        return cappedWidth * 0.1;
     }
 
     toggleCollapse = () => {

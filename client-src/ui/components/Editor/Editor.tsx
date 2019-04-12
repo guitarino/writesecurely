@@ -31,6 +31,9 @@ class Editor extends Component<Required<EditorProps>, EditorComponentState> {
     private container: HTMLElement;
     private view: EditorView;
 
+    // TO-DO: This doesn't correspond to the react / preact component because the order of args
+    //        is screwed up. I should investigate a way to perhaps swap it around & inject dependencies
+    //        via using a higher order component, for example.
     constructor(editorSchema: EditorSchema, props: Required<EditorProps>) {
         super(props);
         this.editorSchema = editorSchema;

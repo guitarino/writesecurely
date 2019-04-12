@@ -2,10 +2,18 @@
 
 .Editor {
     @include flexParent;
-    padding: 16px;
 
-    > :first-child {
-        @include flexChildExpand;
-        outline: none;
+    &__Menu {
+        @include flexChildCollapse;
+    }
+
+    &__Content {
+        @include flexParent;
+        padding: 16px;
+        
+        > :first-child {
+            @include flexChildExpand;
+            outline: none;
+        }
     }
 }

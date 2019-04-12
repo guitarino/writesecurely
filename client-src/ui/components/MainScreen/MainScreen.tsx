@@ -1,7 +1,7 @@
 import { h } from "preact";
 import { Sidebar } from "../Sidebar/Sidebar";
 import "./MainScreen.scss";
-import { Editor } from "../Editor/Editor";
+import { Editor } from "../Editor";
 
 export function MainScreen() {
     return (

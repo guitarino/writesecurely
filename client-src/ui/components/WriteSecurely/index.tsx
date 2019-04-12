@@ -1,3 +1,4 @@
+import "../Editor/prosemirror/configuration";
 import { h, render } from "preact";
 import { WriteSecurely } from "./WriteSecurely";
 

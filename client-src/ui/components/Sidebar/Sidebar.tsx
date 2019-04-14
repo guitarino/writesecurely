@@ -1,7 +1,7 @@
 import { h, Component, ComponentChildren } from "preact";
 import "./Sidebar.scss";
 import { WriteSecurelyLabel, WriteSecurelyLogo } from "../WriteSecurelyLogo/WriteSecurelyLogo";
-import { OptionalOf } from "../../types/OptionalOf";
+import { OptionalOf } from "../../../types/OptionalOf";
 
 export type SidebarProps = {
     className?: string,

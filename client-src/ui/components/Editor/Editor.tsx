@@ -2,7 +2,7 @@ import { h, Component } from "preact";
 import { EditorState } from "prosemirror-state";
 import { EditorView } from "prosemirror-view";
 import { DOMParser } from "prosemirror-model";
-import { OptionalOf } from "../../types/OptionalOf";
+import { OptionalOf } from "../../../types/OptionalOf";
 import { setup } from "./prosemirror/setup";
 import "./Editor.scss"
 import { EditorSchema } from "./prosemirror/EditorSchema.types";
@@ -22,7 +22,7 @@ export class Editor extends Component<Required<EditorProps>, EditorComponentStat
     private editorState: EditorState;
     private container: HTMLElement;
     private view: EditorView;
-    
+
     static defaultProps: OptionalOf<EditorProps> = {
         className: '',
         initialContent: '<p>Hello <b>World</b>!</p>'

@@ -1,8 +1,8 @@
 import { TypeIdentifier, LazyTypeIdentifier, LazyMultiTypeIdentifier, MultiTypeIdentifier } from "typeinject/typeContainer.types";
 import { h, ComponentConstructor, Component } from "preact";
-import { Omit } from "../../types/Omit";
+import { Omit } from "../../../types/Omit";
 import { dependency, type, inject, getImplementation } from "../../../type/inject";
-import { ValuesOf } from "../../types/ValuesOf";
+import { ValuesOf } from "../../../types/ValuesOf";
 import { Lazy } from "typeinject";
 
 type getInjectedComponentConstructor<UC, PM> =

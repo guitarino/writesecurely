@@ -8,8 +8,10 @@
     }
 
     &__Content {
+        @include flexChildExpand;
         @include flexParent;
         padding: 16px;
+        overflow: auto;
         
         > :first-child {
             @include flexChildExpand;

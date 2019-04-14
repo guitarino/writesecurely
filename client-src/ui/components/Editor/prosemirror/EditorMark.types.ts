@@ -1,5 +1,5 @@
 import { MarkSpec } from "prosemirror-model";
-import { type } from "../../../../../type/inject";
+import { type } from "../../../../type/inject";
 
 export const EditorMark = type<EditorMark>();
 export interface EditorMark {

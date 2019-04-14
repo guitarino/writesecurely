@@ -1,4 +1,4 @@
-import { EditorMark } from "./EditorMark.types";
+import { EditorMark } from "../EditorMark.types";
 import { dependency } from "../../../../../type/inject";
 import { MarkSpec } from "prosemirror-model";
 

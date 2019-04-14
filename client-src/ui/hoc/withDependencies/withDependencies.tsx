@@ -5,10 +5,10 @@ import { dependency, type, inject, getImplementation } from "../../../type/injec
 import { ValuesOf } from "../../../types/ValuesOf";
 import { Lazy } from "typeinject";
 
-type getInjectedComponentConstructor<UC, PM> =
+type getInjectedComponentConstructor<UC, PM, PMKeys extends keyof PM> =
     ComponentConstructor<
-        getInjectedProps<getProps<UC>, PM>,
-        getInjectedState<PM>
+        getInjectedProps<getProps<UC>, PMKeys>,
+        getInjectedState<PM, PMKeys>
     > & (
         UC extends typeWithDefaultProps<infer DefProps> ? {
             defaultProps: DefProps
@@ -16,10 +16,10 @@ type getInjectedComponentConstructor<UC, PM> =
     )
 ;
 
-type getInjectedProps<P, PM> = Omit<P, keyof PM>;
+type getInjectedProps<P, PMKeys> = Omit<P, PMKeys>;
 
-type getInjectedState<PM> = {
-    [K in keyof PM]: getTypeFromInjected<PM[K]>
+type getInjectedState<PM, PMKeys extends keyof PM> = {
+    [K in PMKeys]: getTypeFromInjected<PM[K]>
 };
 
 type getTypeFromInjected<I> = I extends TypeIdentifier<infer T> ? T :
@@ -28,8 +28,8 @@ type getTypeFromInjected<I> = I extends TypeIdentifier<infer T> ? T :
     I extends LazyMultiTypeIdentifier<infer T> ? Lazy<T[]> :
     never;
 
-type getPropMap<P> = {
-    [K in keyof P]?: P[K] extends Lazy<Array<infer U>> ? LazyMultiTypeIdentifier<U> :
+type getPropMap<P, PMKeys extends keyof P> = {
+    [K in PMKeys]: P[K] extends Lazy<Array<infer U>> ? LazyMultiTypeIdentifier<U> :
         P[K] extends Lazy<infer U> ? LazyTypeIdentifier<U> :
         P[K] extends Array<infer U> ? MultiTypeIdentifier<U> :
         TypeIdentifier<P[K]>
@@ -41,12 +41,12 @@ type typeWithDefaultProps<DefProps> = {
     defaultProps: DefProps
 };
 
-export function withDependencies<
-    UC,
-    PM extends getPropMap<getProps<UC>>
->(UserComponent: UC, propMap: PM): getInjectedComponentConstructor<UC, PM> {
-    const propNames: Array<keyof PM> = [];
-    const dependencies: Array<ValuesOf<PM>> = [];
+export function withDependencies<UC, PMKeys extends keyof getProps<UC>>(
+    UserComponent: UC,
+    propMap: getPropMap<getProps<UC>, PMKeys>
+): getInjectedComponentConstructor<UC, typeof propMap, PMKeys> {
+    const propNames: Array<keyof typeof propMap> = [];
+    const dependencies: Array<ValuesOf<typeof propMap>> = [];
 
     for (let p in propMap) {
         propNames.push(p);
@@ -57,20 +57,20 @@ export function withDependencies<
     @dependency(InjectedType)
     @inject(...dependencies)
     class InjectedComponent extends Component<
-        getInjectedProps<getProps<UC>, PM>,
-        getInjectedState<PM>
+        getInjectedProps<getProps<UC>, PMKeys>,
+        getInjectedState<typeof propMap, PMKeys>
     > {
         constructor(...args) {
             const injecteds = args.slice(0, dependencies.length);
             const others = args.slice(dependencies.length);
             super(...others);
-            const state: Partial<getInjectedState<PM>> = {};
+            const state: Partial<getInjectedState<typeof propMap, PMKeys>> = {};
             for (let i = 0; i <= injecteds.length; i++) {
                 const injected = injecteds[i];
                 const propName = propNames[i];
                 state[propName] = injected;
             }
-            this.state = state as getInjectedState<PM>;
+            this.state = state as getInjectedState<typeof propMap, PMKeys>;
         }
 
         render() {

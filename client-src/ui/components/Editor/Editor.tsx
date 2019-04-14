@@ -6,10 +6,9 @@ import { OptionalOf } from "../../../types/OptionalOf";
 import { setup } from "./prosemirror/setup";
 import "./Editor.scss"
 import { EditorSchema } from "./prosemirror/EditorSchema.types";
-import { Lazy } from "typeinject";
 
 export type EditorProps = {
-    editorSchema: Lazy<EditorSchema>,
+    editorSchema: EditorSchema,
     className?: string,
     initialContent?: string
 };
@@ -46,9 +45,9 @@ export class Editor extends Component<Required<EditorProps>, EditorComponentStat
         const element = document.createElement('div');
         element.innerHTML = initialContent;
         this.editorState = EditorState.create({
-            doc: DOMParser.fromSchema(editorSchema.value.schema).parse(element),
+            doc: DOMParser.fromSchema(editorSchema.schema).parse(element),
             plugins: setup({
-                schema: editorSchema.value.schema
+                schema: editorSchema.schema
             })
         });
         this.view = new EditorView(this.container, {

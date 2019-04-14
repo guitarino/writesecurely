@@ -10,8 +10,8 @@ type getInjectedComponentConstructor<UC, PM, PMKeys extends keyof PM> =
         getInjectedProps<getProps<UC>, PMKeys>,
         getInjectedState<PM, PMKeys>
     > & (
-        UC extends typeWithDefaultProps<infer DefProps> ? {
-            defaultProps: DefProps
+        UC extends typeWithDefaultProps<infer DPs> ? {
+            defaultProps: DPs
         } : {}
     )
 ;
@@ -37,8 +37,8 @@ type getPropMap<P, PMKeys extends keyof P> = {
 
 type getProps<UC> = UC extends ComponentConstructor<infer P, any> ? P : never;
 
-type typeWithDefaultProps<DefProps> = {
-    defaultProps: DefProps
+type typeWithDefaultProps<DPs> = {
+    defaultProps: DPs
 };
 
 export function withDependencies<UC, PMKeys extends keyof getProps<UC>>(

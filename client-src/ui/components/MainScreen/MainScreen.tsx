@@ -2,6 +2,7 @@ import { h } from "preact";
 import { Sidebar } from "../Sidebar/Sidebar";
 import "./MainScreen.scss";
 import { Editor } from "../Editor";
+import { EditorSchema } from "../Editor/prosemirror/EditorSchema.types";
 
 export function MainScreen() {
     return (

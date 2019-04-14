@@ -5,10 +5,10 @@ import { dependency, type, inject, getImplementation } from "../../../type/injec
 import { ValuesOf } from "../../../types/ValuesOf";
 import { Lazy } from "typeinject";
 
-type getInjectedComponentConstructor<UC, PM, PMKeys extends keyof PM> =
+type getInjectedComponentConstructor<UC, PM> =
     ComponentConstructor<
-        getInjectedProps<getProps<UC>, PMKeys>,
-        getInjectedState<PM, PMKeys>
+        getInjectedProps<getProps<UC>, PM>,
+        getInjectedState<PM>
     > & (
         UC extends TypeWithDefaultProps<infer DPs> ? {
             defaultProps: DPs
@@ -16,10 +16,10 @@ type getInjectedComponentConstructor<UC, PM, PMKeys extends keyof PM> =
     )
 ;
 
-type getInjectedProps<P, PMKeys> = Omit<P, PMKeys>;
+type getInjectedProps<P, PM> = Omit<P, keyof PM>;
 
-type getInjectedState<PM, PMKeys extends keyof PM> = {
-    [K in PMKeys]: getTypeFromInjected<PM[K]>
+type getInjectedState<PM> = {
+    [K in keyof PM]: getTypeFromInjected<PM[K]>
 };
 
 type getTypeFromInjected<I> = I extends TypeIdentifier<infer T> ? T :
@@ -44,7 +44,7 @@ type TypeWithDefaultProps<DPs> = {
 export function withDependencies<UC, PMKeys extends keyof getProps<UC>>(
     UserComponent: UC,
     propMap: getPropMap<getProps<UC>, PMKeys>
-): getInjectedComponentConstructor<UC, typeof propMap, PMKeys> {
+): getInjectedComponentConstructor<UC, typeof propMap> {
     const propNames: Array<keyof typeof propMap> = [];
     const dependencies: Array<ValuesOf<typeof propMap>> = [];
 
@@ -57,20 +57,20 @@ export function withDependencies<UC, PMKeys extends keyof getProps<UC>>(
     @dependency(InjectedType)
     @inject(...dependencies)
     class InjectedComponent extends Component<
-        getInjectedProps<getProps<UC>, PMKeys>,
-        getInjectedState<typeof propMap, PMKeys>
+        getInjectedProps<getProps<UC>, typeof propMap>,
+        getInjectedState<typeof propMap>
     > {
         constructor(...args) {
             const injecteds = args.slice(0, dependencies.length);
             const others = args.slice(dependencies.length);
             super(...others);
-            const state: Partial<getInjectedState<typeof propMap, PMKeys>> = {};
+            const state: Partial<getInjectedState<typeof propMap>> = {};
             for (let i = 0; i <= injecteds.length; i++) {
                 const injected = injecteds[i];
                 const propName = propNames[i];
                 state[propName] = injected;
             }
-            this.state = state as getInjectedState<typeof propMap, PMKeys>;
+            this.state = state as getInjectedState<typeof propMap>;
         }
 
         render() {

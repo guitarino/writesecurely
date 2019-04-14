@@ -1,4 +1,7 @@
-import { EditorType } from "./Editor";
-import { getComponentImplementation } from "../../../type/inject";
+import { Editor as Component } from "./Editor";
+import { withDependencies } from "../../hoc/withDependencies/withDependencies";
+import { EditorSchema } from "./prosemirror/EditorSchema.types";
 
-export const Editor = getComponentImplementation(EditorType);
+export const Editor = withDependencies(Component, {
+    editorSchema: EditorSchema.lazy
+});

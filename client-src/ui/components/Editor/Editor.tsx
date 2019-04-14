@@ -5,10 +5,11 @@ import { DOMParser } from "prosemirror-model";
 import { OptionalOf } from "../../types/OptionalOf";
 import { setup } from "./prosemirror/setup";
 import "./Editor.scss"
-import { inject, dependency, type } from "../../../type/inject";
 import { EditorSchema } from "./prosemirror/EditorSchema.types";
+import { Lazy } from "typeinject";
 
 export type EditorProps = {
+    editorSchema: Lazy<EditorSchema>,
     className?: string,
     initialContent?: string
 };
@@ -17,27 +18,15 @@ export type EditorComponentState = {
 
 };
 
-export const EditorType = type<typeof Editor>();
-@dependency(EditorType)
-@inject(EditorSchema)
-class Editor extends Component<Required<EditorProps>, EditorComponentState> {
+export class Editor extends Component<Required<EditorProps>, EditorComponentState> {
     static defaultProps: OptionalOf<EditorProps> = {
         className: '',
         initialContent: '<p>Hello <b>World</b>!</p>'
     };
 
-    private readonly editorSchema: EditorSchema;
     private editorState: EditorState;
     private container: HTMLElement;
     private view: EditorView;
-
-    // TO-DO: This doesn't correspond to the react / preact component because the order of args
-    //        is screwed up. I should investigate a way to perhaps swap it around & inject dependencies
-    //        via using a higher order component, for example.
-    constructor(editorSchema: EditorSchema, props: Required<EditorProps>) {
-        super(props);
-        this.editorSchema = editorSchema;
-    }
 
     render() {
         return (
@@ -53,12 +42,13 @@ class Editor extends Component<Required<EditorProps>, EditorComponentState> {
     }
 
     componentDidMount() {
+        const { initialContent, editorSchema } = this.props;
         const element = document.createElement('div');
-        element.innerHTML = this.props.initialContent;
+        element.innerHTML = initialContent;
         this.editorState = EditorState.create({
-            doc: DOMParser.fromSchema(this.editorSchema.schema).parse(element),
+            doc: DOMParser.fromSchema(editorSchema.value.schema).parse(element),
             plugins: setup({
-                schema: this.editorSchema.schema
+                schema: editorSchema.value.schema
             })
         });
         this.view = new EditorView(this.container, {

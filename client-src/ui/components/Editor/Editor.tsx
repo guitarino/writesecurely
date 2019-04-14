@@ -19,14 +19,14 @@ export type EditorComponentState = {
 };
 
 export class Editor extends Component<Required<EditorProps>, EditorComponentState> {
+    private editorState: EditorState;
+    private container: HTMLElement;
+    private view: EditorView;
+    
     static defaultProps: OptionalOf<EditorProps> = {
         className: '',
         initialContent: '<p>Hello <b>World</b>!</p>'
     };
-
-    private editorState: EditorState;
-    private container: HTMLElement;
-    private view: EditorView;
 
     render() {
         return (

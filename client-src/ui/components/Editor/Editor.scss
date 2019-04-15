@@ -9,13 +9,12 @@
 
     &__Content {
         @include flexChildExpand;
-        @include flexParent;
+        flex-basis: 0px;
         padding: 16px;
         overflow: auto;
-        
-        > :first-child {
-            @include flexChildExpand;
-            outline: none;
-        }
+        word-break: break-word;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        min-width: 0px;
     }
 }

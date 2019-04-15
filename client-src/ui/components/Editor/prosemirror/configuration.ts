@@ -15,3 +15,8 @@ import "./marks/EmMark";
 import "./marks/StrongMark";
 import "./marks/CodeMark";
 import "./EditorSchema";
+import "./History";
+import "./Cursor";
+import "./InputRulesManager";
+import "./KeyBindingsManager";
+import "./EditorPluginsManager";

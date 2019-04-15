@@ -1,9 +1,13 @@
 import { EditorNode } from "../EditorNode.types";
-import { dependency } from "../../../../../type/inject";
-import { NodeSpec } from "prosemirror-model";
+import { dependency, type } from "../../../../../type/inject";
+import { NodeSpec, Schema } from "prosemirror-model";
+import { KeyBindings, AddKeyBinding } from "../KeyBindings.types";
+import { setBlockType } from "prosemirror-commands";
+import { InputRules, AddInputRule } from "../InputRules.types";
+import { textblockTypeInputRule } from "prosemirror-inputrules";
 
-@dependency(EditorNode)
-class HeadingNode implements EditorNode {
+@dependency(type(EditorNode, KeyBindings, InputRules))
+class HeadingNode implements EditorNode, KeyBindings, InputRules {
     name: string = 'heading';
 
     nodeSpec: NodeSpec = {
@@ -22,5 +26,19 @@ class HeadingNode implements EditorNode {
         toDOM(node) {
             return ["h" + node.attrs.level, 0];
         }
+    }
+
+    addKeyBindings(addKeyBinding: AddKeyBinding, schema: Schema): void {
+        for (let i = 1; i <= 6; i++) {
+            addKeyBinding("Shift-Ctrl-" + i, setBlockType(schema.nodes.heading, { level: i }));
+        }
+    }
+
+    addInputRules(addInputRule: AddInputRule, schema: Schema) {
+        addInputRule(textblockTypeInputRule(
+            new RegExp("^(#{1,6})\\s$"),
+            schema.nodes.heading,
+            match => ({ level: match[1].length })
+        ));
     }
 }

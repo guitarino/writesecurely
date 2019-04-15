@@ -1,9 +1,11 @@
 import { EditorNode } from "../EditorNode.types";
-import { dependency } from "../../../../../type/inject";
-import { NodeSpec } from "prosemirror-model";
+import { dependency, type } from "../../../../../type/inject";
+import { NodeSpec, Schema } from "prosemirror-model";
+import { KeyBindings, AddKeyBinding } from "../KeyBindings.types";
+import { chainCommands, exitCode } from "prosemirror-commands";
 
-@dependency(EditorNode)
-class HardBreakNode implements EditorNode {
+@dependency(type(EditorNode, KeyBindings))
+class HardBreakNode implements EditorNode, KeyBindings {
     name: string = "hard_break";
 
     nodeSpec: NodeSpec = {
@@ -13,6 +15,23 @@ class HardBreakNode implements EditorNode {
         parseDOM: [{tag: "br"}],
         toDOM() {
             return ["br"];
+        }
+    }
+
+    addKeyBindings(addKeyBinding: AddKeyBinding, schema: Schema, isMac: boolean) {
+        const cmd = chainCommands(exitCode, (state, dispatch) => {
+            if (dispatch) {
+                dispatch(state.tr.replaceSelectionWith(schema.nodes.hard_break.create()).scrollIntoView());
+                return true;
+            }
+            return false;
+        });
+
+        addKeyBinding("Mod-Enter", cmd);
+        addKeyBinding("Shift-Enter", cmd);
+
+        if (isMac) {
+            addKeyBinding("Ctrl-Enter", cmd);
         }
     }
 }

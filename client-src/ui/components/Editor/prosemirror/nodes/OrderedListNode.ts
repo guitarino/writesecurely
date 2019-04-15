@@ -1,9 +1,13 @@
 import { EditorNode } from "../EditorNode.types";
-import { dependency } from "../../../../../type/inject";
-import { NodeSpec } from "prosemirror-model";
+import { dependency, type } from "../../../../../type/inject";
+import { NodeSpec, Schema } from "prosemirror-model";
+import { KeyBindings, AddKeyBinding } from "../KeyBindings.types";
+import { wrapInList } from "../commands/wrapInList";
+import { InputRules, AddInputRule } from "../InputRules.types";
+import { wrappingInputRule } from "prosemirror-inputrules";
 
-@dependency(EditorNode)
-class OrderedListNode implements EditorNode {
+@dependency(type(EditorNode, KeyBindings, InputRules))
+class OrderedListNode implements EditorNode, KeyBindings, InputRules {
     name: string = 'ordered_list';
 
     nodeSpec: NodeSpec = {
@@ -23,5 +27,18 @@ class OrderedListNode implements EditorNode {
                 ? ["ol", 0]
                 : ["ol", { start: node.attrs.order }, 0];
         }
+    }
+
+    addKeyBindings(addKeyBinding: AddKeyBinding, schema: Schema) {
+        addKeyBinding("Shift-Ctrl-9", wrapInList(schema.nodes.ordered_list));
+    }
+
+    addInputRules(addInputRule: AddInputRule, schema: Schema) {
+        addInputRule(wrappingInputRule(
+            /^(\d+)\.\s$/,
+            schema.nodes.ordered_list,
+            match => ({order: +match[1]}),
+            (match, node) => node.childCount + node.attrs.order == +match[1]
+        ));
     }
 }

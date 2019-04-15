@@ -1,9 +1,11 @@
 import { EditorMark } from "../EditorMark.types";
-import { dependency } from "../../../../../type/inject";
-import { MarkSpec } from "prosemirror-model";
+import { dependency, type } from "../../../../../type/inject";
+import { MarkSpec, Schema } from "prosemirror-model";
+import { KeyBindings, AddKeyBinding } from "../KeyBindings.types";
+import { toggleMark } from "prosemirror-commands";
 
-@dependency(EditorMark)
-class LinkMark implements EditorMark {
+@dependency(type(EditorMark, KeyBindings))
+class LinkMark implements EditorMark, KeyBindings {
     name: string = "em";
 
     markSpec: MarkSpec = {
@@ -15,5 +17,10 @@ class LinkMark implements EditorMark {
         toDOM() {
             return ["em", 0];
         }
+    }
+
+    addKeyBindings(addKeyBinding: AddKeyBinding, schema: Schema) {
+        addKeyBinding("Mod-i", toggleMark(schema.marks.em));
+        addKeyBinding("Mod-I", toggleMark(schema.marks.em));
     }
 }

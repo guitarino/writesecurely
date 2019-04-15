@@ -8,7 +8,13 @@ export function MainScreen() {
         <div className="MainScreen">
             <Sidebar className="MainScreen__Sidebar">Sidebar</Sidebar>
             <div className="MainScreen__Editor">
-                <Editor className='MainScreen__EditorContent' />
+                <Editor
+                    className='MainScreen__EditorContent'
+                    initialState={null}
+                    provideGetCurrentState={(getCurrentState => {
+                        setInterval(() => console.log(getCurrentState()), 10000);
+                    })}
+                />
             </div>
         </div>
     )

@@ -1,0 +1,10 @@
+@import "../../../style-mixins/flex.scss";
+
+.EditorPresenter {
+    @include flexParent;
+        
+    > :first-child {
+        @include flexChildExpand;
+        outline: none;
+    }
+}

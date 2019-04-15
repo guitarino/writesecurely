@@ -5,16 +5,16 @@ import { dependency, type, inject, getImplementation } from "../../../type/injec
 import { ValuesOf } from "../../../types/ValuesOf";
 import { Lazy } from "typeinject";
 
-type getInjectedComponentConstructor<UC, PM> =
-    ComponentConstructor<
-        getInjectedProps<getProps<UC>, PM>,
-        getInjectedState<PM>
-    > & (
-        UC extends TypeWithDefaultProps<infer DPs> ? {
-            defaultProps: DPs
-        } : {}
-    )
-;
+interface getInjectedComponentConstructor<
+    UC,
+    PM,
+    P = getInjectedProps<getProps<UC>, PM>,
+    S = getInjectedState<PM>
+> {
+    new (props: P, context?: any): Component<P, S>;
+    displayName?: string;
+    defaultProps?: UC extends TypeWithDefaultProps<infer DPs> ? DPs : never
+};
 
 type getInjectedProps<P, PM> = Omit<P, keyof PM>;
 
@@ -41,7 +41,10 @@ type TypeWithDefaultProps<DPs> = {
     defaultProps: DPs
 };
 
-export function withDependencies<UC, PMKeys extends keyof getProps<UC>>(
+export function withDependencies<
+    UC,
+    PMKeys extends keyof getProps<UC>,
+>(
     UserComponent: UC,
     propMap: getPropMap<getProps<UC>, PMKeys>
 ): getInjectedComponentConstructor<UC, typeof propMap> {
@@ -86,6 +89,5 @@ export function withDependencies<UC, PMKeys extends keyof getProps<UC>>(
         InjectedImplementation.defaultProps = UserComponent.defaultProps;
     }
     
-    // @ts-ignore
     return InjectedImplementation;
 }

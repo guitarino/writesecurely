@@ -1,9 +1,11 @@
 import { EditorNode } from "../EditorNode.types";
-import { dependency } from "../../../../../type/inject";
-import { NodeSpec } from "prosemirror-model";
+import { dependency, type } from "../../../../../type/inject";
+import { NodeSpec, Schema } from "prosemirror-model";
+import { KeyBindings, AddKeyBinding } from "../KeyBindings.types";
+import { setBlockType } from "prosemirror-commands";
 
-@dependency(EditorNode)
-class ParagraphNode implements EditorNode {
+@dependency(type(EditorNode, KeyBindings))
+class ParagraphNode implements EditorNode, KeyBindings {
     name: string = 'paragraph';
 
     nodeSpec: NodeSpec = {
@@ -15,5 +17,9 @@ class ParagraphNode implements EditorNode {
         toDOM() {
             return ["p", 0];
         }
+    }
+    
+    addKeyBindings(addKeyBinding: AddKeyBinding, schema: Schema) {
+        addKeyBinding("Shift-Ctrl-0", setBlockType(schema.nodes.paragraph));
     }
 }

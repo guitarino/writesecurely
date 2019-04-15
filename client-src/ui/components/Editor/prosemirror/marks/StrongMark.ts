@@ -1,14 +1,16 @@
 import { EditorMark } from "../EditorMark.types";
-import { dependency } from "../../../../../type/inject";
-import { MarkSpec } from "prosemirror-model";
+import { dependency, type } from "../../../../../type/inject";
+import { MarkSpec, Schema } from "prosemirror-model";
+import { KeyBindings, AddKeyBinding } from "../KeyBindings.types";
+import { toggleMark } from "prosemirror-commands";
 
-@dependency(EditorMark)
-class StrongMark implements EditorMark {
+@dependency(type(EditorMark, KeyBindings))
+class StrongMark implements EditorMark, KeyBindings {
     name: string = "strong";
 
     markSpec: MarkSpec = {
         parseDOM: [
-            {tag: "strong"},
+            { tag: "strong" },
             // This works around a Google Docs misbehavior where
             // pasted content will be inexplicably wrapped in `<b>`
             // tags with a font-weight normal.
@@ -28,5 +30,10 @@ class StrongMark implements EditorMark {
         toDOM() {
             return ["strong", 0];
         }
+    }
+
+    addKeyBindings(addKeyBinding: AddKeyBinding, schema: Schema) {
+        addKeyBinding("Mod-b", toggleMark(schema.marks.strong));
+        addKeyBinding("Mod-B", toggleMark(schema.marks.strong));
     }
 }

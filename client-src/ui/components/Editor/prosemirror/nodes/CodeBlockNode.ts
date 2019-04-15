@@ -1,9 +1,13 @@
 import { EditorNode } from "../EditorNode.types";
-import { dependency } from "../../../../../type/inject";
-import { NodeSpec } from "prosemirror-model";
+import { dependency, type } from "../../../../../type/inject";
+import { NodeSpec, Schema } from "prosemirror-model";
+import { KeyBindings, AddKeyBinding } from "../KeyBindings.types";
+import { setBlockType } from "prosemirror-commands";
+import { InputRules, AddInputRule } from "../InputRules.types";
+import { textblockTypeInputRule } from "prosemirror-inputrules";
 
-@dependency(EditorNode)
-class CodeBlockNode implements EditorNode {
+@dependency(type(EditorNode, KeyBindings, InputRules))
+class CodeBlockNode implements EditorNode, KeyBindings, InputRules {
     name: string = 'code_block';
 
     nodeSpec: NodeSpec = {
@@ -18,5 +22,13 @@ class CodeBlockNode implements EditorNode {
         toDOM() {
             return ["pre", ["code", 0]];
         }
+    }
+    
+    addKeyBindings(addKeyBinding: AddKeyBinding, schema: Schema) {
+        addKeyBinding("Shift-Ctrl-\\", setBlockType(schema.nodes.code_block));
+    }
+
+    addInputRules(addInputRule: AddInputRule, schema: Schema) {
+        addInputRule(textblockTypeInputRule(/^```$/, schema.nodes.code_block));
     }
 }

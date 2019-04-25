@@ -13,7 +13,7 @@ interface getInjectedComponentConstructor<
 > {
     new (props: P, context?: any): Component<P, S>;
     displayName?: string;
-    defaultProps?: UC extends TypeWithDefaultProps<infer DPs> ? DPs : never
+    defaultProps: UC extends TypeWithDefaultProps<infer DPs> ? DPs : never
 };
 
 type getInjectedProps<P, PM> = Omit<P, keyof PM>;
@@ -89,5 +89,6 @@ export function withDependencies<
         InjectedImplementation.defaultProps = UserComponent.defaultProps;
     }
     
+    // @ts-ignore
     return InjectedImplementation;
 }

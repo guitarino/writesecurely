@@ -25,11 +25,12 @@ export class Editor extends Component<Required<EditorProps>, EditorComponentStat
         return (
             <div className={`${this.props.className} Editor`}>
                 <div className='Editor__Menu'>Some Menu Here</div>
-                <EditorPresenter
-                    className='Editor__Content'
-                    initialState={initialState}
-                    provideGetCurrentState={provideGetCurrentState}
-                />
+                <div className='Editor__Content'>
+                    <EditorPresenter
+                        initialState={initialState}
+                        provideGetCurrentState={provideGetCurrentState}
+                    />
+                </div>
             </div>
         );
     }

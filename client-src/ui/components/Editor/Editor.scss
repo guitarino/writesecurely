@@ -9,12 +9,8 @@
 
     &__Content {
         @include flexChildExpand;
+        position: relative;
         flex-basis: 0px;
-        padding: 24px;
-        overflow: auto;
-        word-break: break-word;
-        overflow-wrap: break-word;
-        word-wrap: break-word;
         min-width: 0px;
     }
 }

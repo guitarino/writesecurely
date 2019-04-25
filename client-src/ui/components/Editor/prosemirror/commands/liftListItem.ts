@@ -26,11 +26,11 @@ export function liftListItem<S extends Schema = any>(
 
         if ($from.node(range.depth - 1).type == itemType) {
             // Inside a parent list
-            return liftToOuterList(state, dispatch, itemType, range)
+            return liftToOuterList(state, dispatch, itemType, range);
         }
         else {
             // Outer list node
-            return liftOutOfList(state, dispatch, range)
+            return liftOutOfList(state, dispatch, range);
         }
     }
 }

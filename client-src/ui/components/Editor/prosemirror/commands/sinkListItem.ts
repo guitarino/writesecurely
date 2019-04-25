@@ -64,7 +64,7 @@ export function sinkListItem<S extends Schema = any>(
                     )
                 )
                 .scrollIntoView()
-            )
+            );
         }
 
         return true;

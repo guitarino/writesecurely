@@ -16,7 +16,7 @@
   "homepage": "https://github.com/guitarino/writesecurely#readme",
   "flat": true,
   "dependencies": {
-    "@babel/runtime": "^7.3.4",
+    "@babel/runtime": "^7.4.3",
     "@types/mocha": "^5.2.6",
     "@types/prosemirror-commands": "^1.0.1",
     "@types/prosemirror-dropcursor": "^1.0.0",
@@ -40,15 +40,9 @@
     "prosemirror-model": "^1.7.0",
     "prosemirror-state": "^1.2.2",
     "prosemirror-transform": "^1.1.3",
-    "prosemirror-view": "^1.8.4",
-    "query-string": "^6.2.0",
-    "typeconnect": "^0.1.1",
+    "prosemirror-view": "^1.8.9",
+    "query-string": "^6.4.2",
+    "typeconnect": "^0.1.2",
     "typeinject": "^0.1.2"
-  },
-  "resolutions": {
-    "prosemirror-model": "1.7.0",
-    "@types/prosemirror-model": "1.7.0",
-    "prosemirror-transform": "1.1.3",
-    "@types/prosemirror-transform": "1.1.0"
   }
 }

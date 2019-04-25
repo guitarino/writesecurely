@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
 		"target": "esnext",
+		"resolveJsonModule": true,
 		"experimentalDecorators": true,
 		"moduleResolution": "node",
 		"allowJs": true,

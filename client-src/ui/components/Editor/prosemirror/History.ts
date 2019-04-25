@@ -13,7 +13,6 @@ class History implements KeyBindings, EditorPlugins {
     addKeyBindings(addKeyBinding: AddKeyBinding, _schema: Schema, isMac: boolean) {
         addKeyBinding("Mod-z", undo);
         addKeyBinding("Shift-Mod-z", redo);
-
         if (!isMac) {
             addKeyBinding("Mod-y", redo);
         }

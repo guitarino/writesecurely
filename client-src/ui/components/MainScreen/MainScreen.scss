@@ -5,10 +5,11 @@ $paper-offset-horizontal: 200px;
 
 .MainScreen {
     @include absoluteExpand;
-    background: #f0e7dd;
+    background: url("/assets/images/retina_wood.png");
     overflow: auto;
 
     &__Paper {
+        transition: transform 500ms ease-in-out;
         margin-top: $paper-offset-vertical;
         margin-left: 200px;
         width: calc(100vw - 2 * #{$paper-offset-horizontal});

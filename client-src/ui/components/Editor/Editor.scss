@@ -1,16 +1,15 @@
 @import "../../style-mixins/flex.scss";
+@import "../Paper/Paper.vars.scss";
 
 .Editor {
-    @include flexParent;
-
     &__Menu {
-        @include flexChildCollapse;
+        top: 0;
+        position: sticky;
+        background: $paper-background;
+        z-index: 1;
     }
 
     &__Content {
-        @include flexChildExpand;
         position: relative;
-        flex-basis: 0px;
-        min-width: 0px;
     }
 }

@@ -4,9 +4,6 @@
 .EditorPresenter {
     > :first-child {
         outline: none;
-        padding: 24px;
-        overflow: auto;
         @include breakWord;
-        @include absoluteExpand;
     }
 }

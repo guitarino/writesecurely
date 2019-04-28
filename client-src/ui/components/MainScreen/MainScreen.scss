@@ -1,21 +1,17 @@
-@import "../../style-mixins/flex.scss";
+@import "../../style-mixins/absolute.scss";
+
+$paper-offset-vertical: 40px;
+$paper-offset-horizontal: 200px;
 
 .MainScreen {
-    @include flexParent(row);
-    @include flexChildExpand;
+    @include absoluteExpand;
+    background: #f0e7dd;
+    overflow: auto;
 
-    &__Sidebar {
-        @include flexChildCollapse;
-    }
-
-    &__Editor {
-        @include flexParent;
-        @include flexChildExpand;
-    }
-
-    &__EditorContent {
-        @include flexChildExpand;
-        flex-basis: 0px;
-        overflow: auto;
+    &__Paper {
+        margin-top: $paper-offset-vertical;
+        margin-left: 200px;
+        width: calc(100vw - 2 * #{$paper-offset-horizontal});
+        min-height: calc(100vh - #{$paper-offset-vertical});
     }
 }

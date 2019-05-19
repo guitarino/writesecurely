@@ -1,14 +1,11 @@
 import { KeyBindings, AddKeyBinding } from "./KeyBindings.types";
 import { undoInputRule, InputRule, inputRules } from "prosemirror-inputrules";
 import { Schema } from "prosemirror-model";
-import { dependency, type, inject } from "../../../../type/inject";
 import { InputRulesManager as IInputRulesManager } from "./InputRulesManager.types";
 import { InputRules, AddInputRule } from "./InputRules.types";
 import { EditorPlugins, AddEditorPlugin } from "./EditorPlugins.types";
 
-@dependency(type(IInputRulesManager, KeyBindings, EditorPlugins))
-@inject(InputRules.multi)
-class InputRulesManager implements IInputRulesManager, KeyBindings, EditorPlugins {
+export class InputRulesManager implements IInputRulesManager, KeyBindings, EditorPlugins {
     private readonly inputRules: InputRules[];
 
     constructor(inputRules: InputRules[]) {

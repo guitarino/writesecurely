@@ -1,9 +1,7 @@
 import { EditorNode } from "../EditorNode.types";
-import { dependency } from "../../../../../type/inject";
 import { NodeSpec } from "prosemirror-model";
 
-@dependency(EditorNode)
-class ImageNode implements EditorNode {
+export class ImageNode implements EditorNode {
     name: string = "image";
 
     nodeSpec: NodeSpec = {

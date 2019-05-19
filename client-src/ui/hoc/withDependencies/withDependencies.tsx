@@ -1,9 +1,9 @@
-import { TypeIdentifier, LazyTypeIdentifier, LazyMultiTypeIdentifier, MultiTypeIdentifier } from "typeinject/typeContainer.types";
+import { Type, TypeLazy, TypeMultiLazy, TypeMulti } from "typeinject/type.types";
 import { h, ComponentConstructor, Component } from "preact";
 import { Omit } from "../../../types/Omit";
-import { dependency, type, inject, getImplementation } from "../../../type/inject";
+import { configureDependency, type } from "../../../type/inject";
 import { ValuesOf } from "../../../types/ValuesOf";
-import { Lazy } from "typeinject";
+import { Lazy } from "typeinject/lazy.types";
 
 interface getInjectedComponentConstructor<
     UC,
@@ -22,17 +22,17 @@ type getInjectedState<PM> = {
     [K in keyof PM]: getTypeFromInjected<PM[K]>
 };
 
-type getTypeFromInjected<I> = I extends TypeIdentifier<infer T> ? T :
-    I extends MultiTypeIdentifier<infer T> ? T[] :
-    I extends LazyTypeIdentifier<infer T> ? Lazy<T> :
-    I extends LazyMultiTypeIdentifier<infer T> ? Lazy<T[]> :
+type getTypeFromInjected<I> = I extends Type<infer T> ? T :
+    I extends TypeMulti<infer T> ? T[] :
+    I extends TypeLazy<infer T> ? Lazy<T> :
+    I extends TypeMultiLazy<infer T> ? Lazy<T[]> :
     never;
 
 type getPropMap<P, PMKeys extends keyof P> = {
-    [K in PMKeys]: P[K] extends Lazy<Array<infer U>> ? LazyMultiTypeIdentifier<U> :
-        P[K] extends Lazy<infer U> ? LazyTypeIdentifier<U> :
-        P[K] extends Array<infer U> ? MultiTypeIdentifier<U> :
-        TypeIdentifier<P[K]>
+    [K in PMKeys]: P[K] extends Lazy<Array<infer U>> ? TypeMultiLazy<U> :
+        P[K] extends Lazy<infer U> ? TypeLazy<U> :
+        P[K] extends Array<infer U> ? TypeMulti<U> :
+        Type<P[K]>
 };
 
 type getProps<UC> = UC extends ComponentConstructor<infer P, any> ? P : never;
@@ -57,8 +57,7 @@ export function withDependencies<
     }
 
     const InjectedType = type();
-    @dependency(InjectedType)
-    @inject(...dependencies)
+
     class InjectedComponent extends Component<
         getInjectedProps<getProps<UC>, typeof propMap>,
         getInjectedState<typeof propMap>
@@ -82,7 +81,10 @@ export function withDependencies<
         }
     }
 
-    const InjectedImplementation = getImplementation(InjectedType);
+    const InjectedImplementation = configureDependency()
+        .implements(InjectedType)
+        .inject(...dependencies)
+        .create(InjectedComponent);
 
     if ('defaultProps' in UserComponent) {
         // @ts-ignore

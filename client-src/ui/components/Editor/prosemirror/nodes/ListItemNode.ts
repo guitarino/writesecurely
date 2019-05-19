@@ -1,13 +1,11 @@
 import { EditorNode } from "../EditorNode.types";
-import { dependency, type } from "../../../../../type/inject";
 import { NodeSpec, Schema } from "prosemirror-model";
 import { KeyBindings, AddKeyBinding } from "../KeyBindings.types";
 import { splitListItem } from "../commands/splitListItem";
 import { liftListItem } from "../commands/liftListItem";
 import { sinkListItem } from "../commands/sinkListItem";
 
-@dependency(type(EditorNode, KeyBindings))
-class ListItemNode implements EditorNode, KeyBindings {
+export class ListItemNode implements EditorNode, KeyBindings {
     name: string = 'list_item';
 
     nodeSpec: NodeSpec = {

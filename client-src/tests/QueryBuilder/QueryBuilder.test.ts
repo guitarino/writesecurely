@@ -4,7 +4,7 @@ import { get } from "../../type/inject";
 import assert from 'assert';
 
 describe('QueryBuilder', () => {
-    const queryBuilder: QueryBuilder = get<QueryBuilder>(QueryBuilder);
+    const queryBuilder: QueryBuilder = get(QueryBuilder);
 
     it('getStringFromQuery converts url query object to string', () => {
         const query = { happy: 'birthday', hello: 'world' };

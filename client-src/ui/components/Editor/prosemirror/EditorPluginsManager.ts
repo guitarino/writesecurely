@@ -1,12 +1,9 @@
-import { dependency, inject } from "../../../../type/inject";
-import { EditorPluginsManager as IEditorPluginsManager } from "./EditorPluginsManager.types";
 import { EditorPlugins, AddEditorPlugin } from "./EditorPlugins.types";
 import { Plugin } from "prosemirror-state";
 import { Schema } from "prosemirror-model";
+import { EditorPluginsManager as IEditorPluginsManager } from "./EditorPluginsManager.types";
 
-@dependency(IEditorPluginsManager)
-@inject(EditorPlugins.multi)
-class EditorPluginsManager implements IEditorPluginsManager {
+export class EditorPluginsManager implements IEditorPluginsManager {
     private readonly editorPlugins: EditorPlugins[];
 
     constructor(editorPlugins: EditorPlugins[]) {

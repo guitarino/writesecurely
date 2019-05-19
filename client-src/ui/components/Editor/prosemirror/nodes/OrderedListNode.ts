@@ -1,13 +1,11 @@
 import { EditorNode } from "../EditorNode.types";
-import { dependency, type } from "../../../../../type/inject";
 import { NodeSpec, Schema } from "prosemirror-model";
 import { KeyBindings, AddKeyBinding } from "../KeyBindings.types";
 import { wrapInList } from "../commands/wrapInList";
 import { InputRules, AddInputRule } from "../InputRules.types";
 import { wrappingInputRule } from "prosemirror-inputrules";
 
-@dependency(type(EditorNode, KeyBindings, InputRules))
-class OrderedListNode implements EditorNode, KeyBindings, InputRules {
+export class OrderedListNode implements EditorNode, KeyBindings, InputRules {
     name: string = 'ordered_list';
 
     nodeSpec: NodeSpec = {

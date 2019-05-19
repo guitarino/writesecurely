@@ -1,11 +1,9 @@
 import { EditorMark } from "../EditorMark.types";
-import { dependency, type } from "../../../../../type/inject";
 import { MarkSpec, Schema } from "prosemirror-model";
 import { KeyBindings, AddKeyBinding } from "../KeyBindings.types";
 import { toggleMark } from "prosemirror-commands";
 
-@dependency(type(EditorMark, KeyBindings))
-class StrongMark implements EditorMark, KeyBindings {
+export class StrongMark implements EditorMark, KeyBindings {
     name: string = "strong";
 
     markSpec: MarkSpec = {

@@ -1,15 +1,9 @@
 import { Schema, NodeSpec, MarkSpec } from "prosemirror-model";
-import { inject, dependency } from "../../../../type/inject";
 import { EditorNode } from "./EditorNode.types";
 import { EditorMark } from "./EditorMark.types";
 import { EditorSchema as IEditorSchema } from "./EditorSchema.types";
 
-@dependency(IEditorSchema)
-@inject(
-    EditorNode.multi,
-    EditorMark.multi
-)
-class EditorSchema implements IEditorSchema {
+export class EditorSchema implements IEditorSchema {
     public schema: Schema;
 
     constructor(nodes: EditorNode[], marks: EditorMark[]) {

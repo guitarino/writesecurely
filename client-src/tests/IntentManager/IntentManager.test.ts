@@ -1,12 +1,11 @@
 import "../../modules/Intent/IntentManager";
 import { IntentManager } from "../../modules/Intent/IntentManager.types";
-import { get, dependency, type } from "../../type/inject";
+import { get, configureDependency, type } from "../../type/inject";
 import { Intent } from "../../modules/Intent/Intent.types";
 import { connect, observed } from "../../type/connect";
 import assert from "assert";
 
 const IAIntent = type<Intent>(Intent);
-@dependency(IAIntent.singleton)
 class AIntent implements Intent {
     @observed isCurrentIntentValid: boolean = false;
     @observed isCurrentIntent: boolean = false;
@@ -16,7 +15,6 @@ class AIntent implements Intent {
 }
 
 const IBIntent = type<Intent>(Intent);
-@dependency(IBIntent.singleton)
 class BIntent implements Intent {
     @observed isCurrentIntentValid: boolean = false;
     @observed isCurrentIntent: boolean = false;
@@ -26,7 +24,6 @@ class BIntent implements Intent {
 }
 
 const ICIntent = type<Intent>(Intent);
-@dependency(ICIntent.singleton)
 class CIntent implements Intent {
     @observed isCurrentIntentValid: boolean = false;
     @observed isCurrentIntent: boolean = false;
@@ -34,6 +31,18 @@ class CIntent implements Intent {
         connect(this);
     }
 }
+
+configureDependency()
+    .implements(IAIntent)
+    .create(AIntent);
+
+configureDependency()
+    .implements(IBIntent)
+    .create(BIntent);
+
+configureDependency()
+    .implements(ICIntent)
+    .create(CIntent);
 
 function resetIntents([ aIntent, bIntent, cIntent ]) {
     aIntent.isCurrentIntent = false;

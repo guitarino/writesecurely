@@ -243,10 +243,10 @@ typeconnect@^0.1.2:
   dependencies:
     "@babel/runtime" "^7.3.1"
 
-typeinject@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/typeinject/-/typeinject-0.1.2.tgz#2d6e2e786f3e314208f2184b5d7fda07cfc52ae3"
-  integrity sha512-Os2C2wzENGSzS8nI3QYg2eNiBttM7Lpxljwuy6lNtaYUvTNxwFV2SvnZoIQulXGRWGoy0CPA5R7D54YYZUUZ2g==
+typeinject@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/typeinject/-/typeinject-0.2.0.tgz#02d964592f83b204a51815d1e4d7f75e8e2f5e7d"
+  integrity sha512-PzHue2k5c3Mf6wC+kxDuMqARjhYOuajjE4RRpN24mJlpqxjUBhaGCwnfwvQEWRY5wSWFCGO5QTM6/0L5519KGQ==
   dependencies:
     "@babel/runtime" "^7.3.1"
 

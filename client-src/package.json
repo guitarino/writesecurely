@@ -43,6 +43,6 @@
     "prosemirror-view": "^1.8.9",
     "query-string": "^6.4.2",
     "typeconnect": "^0.1.2",
-    "typeinject": "^0.1.2"
+    "typeinject": "^0.2.0"
   }
 }

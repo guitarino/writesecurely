@@ -1,13 +1,11 @@
 import { EditorNode } from "../EditorNode.types";
-import { dependency, type } from "../../../../../type/inject";
 import { NodeSpec, Schema } from "prosemirror-model";
 import { KeyBindings, AddKeyBinding } from "../KeyBindings.types";
 import { setBlockType } from "prosemirror-commands";
 import { InputRules, AddInputRule } from "../InputRules.types";
 import { textblockTypeInputRule } from "prosemirror-inputrules";
 
-@dependency(type(EditorNode, KeyBindings, InputRules))
-class CodeBlockNode implements EditorNode, KeyBindings, InputRules {
+export class CodeBlockNode implements EditorNode, KeyBindings, InputRules {
     name: string = 'code_block';
 
     nodeSpec: NodeSpec = {

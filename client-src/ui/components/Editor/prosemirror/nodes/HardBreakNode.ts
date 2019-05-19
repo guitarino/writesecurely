@@ -1,11 +1,9 @@
 import { EditorNode } from "../EditorNode.types";
-import { dependency, type } from "../../../../../type/inject";
 import { NodeSpec, Schema } from "prosemirror-model";
 import { KeyBindings, AddKeyBinding } from "../KeyBindings.types";
 import { chainCommands, exitCode } from "prosemirror-commands";
 
-@dependency(type(EditorNode, KeyBindings))
-class HardBreakNode implements EditorNode, KeyBindings {
+export class HardBreakNode implements EditorNode, KeyBindings {
     name: string = "hard_break";
 
     nodeSpec: NodeSpec = {

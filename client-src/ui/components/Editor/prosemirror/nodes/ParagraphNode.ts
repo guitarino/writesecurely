@@ -1,11 +1,9 @@
 import { EditorNode } from "../EditorNode.types";
-import { dependency, type } from "../../../../../type/inject";
 import { NodeSpec, Schema } from "prosemirror-model";
 import { KeyBindings, AddKeyBinding } from "../KeyBindings.types";
 import { setBlockType } from "prosemirror-commands";
 
-@dependency(type(EditorNode, KeyBindings))
-class ParagraphNode implements EditorNode, KeyBindings {
+export class ParagraphNode implements EditorNode, KeyBindings {
     name: string = 'paragraph';
 
     nodeSpec: NodeSpec = {

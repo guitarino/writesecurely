@@ -1,9 +1,7 @@
 import { EditorMark } from "../EditorMark.types";
-import { dependency } from "../../../../../type/inject";
 import { MarkSpec } from "prosemirror-model";
 
-@dependency(EditorMark)
-class LinkMark implements EditorMark {
+export class LinkMark implements EditorMark {
     name: string = "link";
 
     markSpec: MarkSpec = {

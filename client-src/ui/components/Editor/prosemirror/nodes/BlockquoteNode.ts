@@ -1,13 +1,11 @@
 import { EditorNode } from "../EditorNode.types";
-import { dependency, type } from "../../../../../type/inject";
-import { NodeSpec, NodeType, Schema } from "prosemirror-model";
+import { NodeSpec, Schema } from "prosemirror-model";
 import { KeyBindings, AddKeyBinding } from "../KeyBindings.types";
 import { wrapIn } from "prosemirror-commands";
 import { InputRules, AddInputRule } from "../InputRules.types";
 import { wrappingInputRule } from "prosemirror-inputrules";
 
-@dependency(type(EditorNode, KeyBindings, InputRules))
-class BlockquoteNode implements EditorNode, KeyBindings, InputRules {
+export class BlockquoteNode implements EditorNode, KeyBindings, InputRules {
     name: string = 'blockquote';
 
     nodeSpec: NodeSpec = {

@@ -1,38 +1,38 @@
 const path = require('path');
+const { NormalModuleReplacementPlugin } = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const projectRoot = path.join(__dirname);
 
 module.exports = {
     entry: {
-        "main": path.join(__dirname, 'src', 'main.js'),
-        "crypto-worker": path.join(__dirname, 'src', 'crypto-worker', 'crypto-worker.js')
+        'main': path.resolve(projectRoot, 'client-transpiled', 'main.js'),
+        "crypto-worker": path.join(projectRoot, 'client-transpiled', 'modules', 'Workers', 'CryptoWorker', 'index.js')
     },
-    mode: "development",
+    mode: 'development',
     output: {
         publicPath: './src/',
-        path: path.join(__dirname, './build/src'),
+        path: path.resolve(projectRoot, 'client-build', 'src'),
         filename: '[name].js',
         chunkFilename: '[id].js',
     },
     resolve: {
-        extensions: ['.js', '.jsx', '.json'],
-        alias: {
-            Config: path.resolve(__dirname, "./config/dev.config.json")
-        }
+        modules: [
+            path.resolve(projectRoot, 'client-src', 'node_modules')
+        ],
+        extensions: ['.js', '.jsx', '.json']
     },
     devtool: 'source-map',
     module: {
         rules: [
             {
-                test: /\.m?jsx?$/,
-                exclude: /(node_modules|bower_components)/,
-                use: [{
-                    loader: 'babel-loader',
-                    options:  {
-                        babelrc: true
-                    }
-                }]
+                test: /\.(jsx|js)$/,
+                exclude: [
+                    path.resolve(projectRoot, 'client-src', 'node_modules')
+                ],
+                use: ["source-map-loader"],
+                enforce: "pre"
             },
             {
                 test: /\.(sc|sa|c)ss$/,
@@ -46,14 +46,20 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin([
-            "build"
-        ], {
-            root: __dirname
-        }),
+            path.resolve(projectRoot, 'client-build')
+        ]),
         new CopyWebpackPlugin([{
-            from: './static',
-            to: '../'
+            from:
+                path.resolve(projectRoot, 'static'),
+            to:
+                path.resolve(projectRoot, 'client-build')
         }]),
+        new NormalModuleReplacementPlugin(
+            /(\.(sc|sa|c)ss|.json)$/,
+            (resource) => {
+                resource.context = resource.context.replace('client-transpiled', 'client-src')
+            }
+        ),
         new MiniCssExtractPlugin({
             filename: '[name].css',
             chunkFilename: '[id].css'

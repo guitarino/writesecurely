@@ -1,0 +1,15 @@
+@import "../../style-mixins/flex.scss";
+@import "../Paper/Paper.vars.scss";
+
+.Editor {
+    &__Menu {
+        top: 0;
+        position: sticky;
+        background: $paper-background;
+        z-index: 1;
+    }
+
+    &__Content {
+        position: relative;
+    }
+}

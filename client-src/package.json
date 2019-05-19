@@ -1,0 +1,48 @@
+{
+  "name": "writesecurely",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "main": "static/src/main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guitarino/writesecurely.git"
+  },
+  "author": "Kirill Shestakov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/guitarino/writesecurely/issues"
+  },
+  "homepage": "https://github.com/guitarino/writesecurely#readme",
+  "flat": true,
+  "dependencies": {
+    "@babel/runtime": "^7.4.3",
+    "@types/mocha": "^5.2.6",
+    "@types/prosemirror-commands": "^1.0.1",
+    "@types/prosemirror-dropcursor": "^1.0.0",
+    "@types/prosemirror-gapcursor": "^1.0.1",
+    "@types/prosemirror-history": "^1.0.1",
+    "@types/prosemirror-inputrules": "^1.0.2",
+    "@types/prosemirror-keymap": "^1.0.1",
+    "@types/prosemirror-model": "^1.7.0",
+    "@types/prosemirror-state": "^1.2.3",
+    "@types/prosemirror-transform": "^1.1.0",
+    "@types/prosemirror-view": "^1.3.1",
+    "aes-js": "^3.1.2",
+    "js-sha256": "^0.9.0",
+    "preact": "^8.4.2",
+    "prosemirror-commands": "^1.0.7",
+    "prosemirror-dropcursor": "^1.1.1",
+    "prosemirror-gapcursor": "^1.0.3",
+    "prosemirror-history": "^1.0.4",
+    "prosemirror-inputrules": "^1.0.1",
+    "prosemirror-keymap": "^1.0.1",
+    "prosemirror-model": "^1.7.0",
+    "prosemirror-state": "^1.2.2",
+    "prosemirror-transform": "^1.1.3",
+    "prosemirror-view": "^1.8.9",
+    "query-string": "^6.4.2",
+    "typeconnect": "^0.1.2",
+    "typeinject": "^0.2.0"
+  }
+}

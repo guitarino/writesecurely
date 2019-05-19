@@ -9,13 +9,35 @@
             "request": "launch",
             "name": "WriteSecurely",
             "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}",
+            "webRoot": "${workspaceFolder}/client-src/",
             "sourceMapPathOverrides": {
                 "webpack:///./*": "${webRoot}/*",
                 "webpack:///src/*": "${webRoot}/*",
                 "webpack:///*": "*",
                 "webpack:///./~/*": "${webRoot}/node_modules/*",
-                "meteor://💻app/*": "${webRoot}/*"
+                "meteor://💻app/*": "${webRoot}/*",
+                "webpack:///./client-src/*": "${webRoot}/*"
+            }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Current Test",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "env": {
+                "NODE_PATH": "client-src/node_modules",
+                "ROOT_DIR": "client-src",
+                "OUT_DIR": "client-transpiled",
+                "SOURCE_TEST_FILE": "${file}"
+            },
+            "args": [
+                "client-dev-scripts/runCurrentTest.js"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "sourceMaps": true,
+            "sourceMapPathOverrides": {
+                "./client-src/*": "${workspaceFolder}/client-src/*"
             }
         }
     ]

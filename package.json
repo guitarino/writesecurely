@@ -1,12 +1,18 @@
 {
-  "name": "writesecurely",
+  "name": "writesecurely-build",
+  "private": true,
   "version": "0.0.1",
   "description": "",
   "main": "static/src/main.js",
   "scripts": {
-    "build:dev": "webpack -w",
-    "start:dev": "http-server ./build/ -c 0",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "yarn:install": "yarn install && cd client-src && yarn install",
+    "transpile": "node client-dev-scripts/transpile.js --root-dir client-src --out-dir client-transpiled",
+    "transpile:watch": "yarn run transpile -- --watch --source-map",
+    "build:dev": "yarn run transpile --source-map && concurrently \"yarn run transpile:watch -- --ignore-initial\" \"webpack -w\"",
+    "start:dev": "http-server ./client-build/ -c 0",
+    "test:only": "cross-env NODE_PATH=client-src/node_modules nyc --all mocha client-transpiled/**/*.test.js --require mocha-isolation/register",
+    "test": "yarn run yarn:install && yarn run transpile -- --source-map && yarn run test:only",
+    "test:after": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -18,32 +24,41 @@
     "url": "https://github.com/guitarino/writesecurely/issues"
   },
   "homepage": "https://github.com/guitarino/writesecurely#readme",
-  "devDependencies": {
-    "@babel/core": "^7.1.2",
-    "@babel/plugin-proposal-class-properties": "^7.1.0",
-    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
-    "@babel/plugin-transform-react-jsx": "^7.0.0",
-    "@babel/preset-env": "^7.1.0",
-    "babel-loader": "^8.0.4",
-    "clean-webpack-plugin": "^0.1.19",
-    "copy-webpack-plugin": "^4.5.4",
-    "css-loader": "^1.0.0",
-    "http-server": "^0.11.1",
-    "mini-css-extract-plugin": "^0.4.4",
-    "node-sass": "^4.9.4",
-    "query-string": "^6.2.0",
-    "redux-devtools-extension": "^2.13.5",
-    "sass-loader": "^7.1.0",
-    "webpack": "^4.21.0",
-    "webpack-cli": "^3.1.2"
+  "nyc": {
+    "include": [
+      "client-transpiled/**/*.js"
+    ]
   },
-  "dependencies": {
-    "@babel/polyfill": "^7.0.0",
-    "aes-js": "^3.1.1",
-    "js-sha256": "^0.9.0",
-    "preact": "^8.3.1",
-    "preact-redux": "^2.0.3",
-    "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/plugin-proposal-class-properties": "^7.3.4",
+    "@babel/plugin-proposal-decorators": "^7.3.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
+    "@babel/plugin-transform-runtime": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-typescript": "^7.3.3",
+    "@types/aes-js": "^3.1.0",
+    "@types/mocha": "^5.2.6",
+    "@types/node": "^11.10.4",
+    "babel-loader": "^8.0.5",
+    "chokidar": "^2.1.2",
+    "clean-webpack-plugin": "^1.0.1",
+    "concurrently": "^4.1.0",
+    "copy-webpack-plugin": "^5.0.0",
+    "cross-env": "^5.2.0",
+    "css-loader": "^2.1.0",
+    "http-server": "^0.11.1",
+    "mini-css-extract-plugin": "^0.5.0",
+    "mocha": "^6.0.2",
+    "mocha-isolation": "^0.1.5",
+    "node-sass": "^4.12.0",
+    "nyc": "^13.3.0",
+    "replace-ext": "^1.0.0",
+    "sass-loader": "^7.1.0",
+    "source-map-loader": "^0.2.4",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
   }
 }

@@ -1,0 +1,9 @@
+@import "../../../style-mixins/absolute.scss";
+@import "../../../style-mixins/break.scss";
+
+.EditorPresenter {
+    > :first-child {
+        outline: none;
+        @include breakWord;
+    }
+}

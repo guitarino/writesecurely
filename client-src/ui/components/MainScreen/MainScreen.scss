@@ -1,0 +1,18 @@
+@import "../../style-mixins/absolute.scss";
+
+$paper-offset-vertical: 40px;
+$paper-offset-horizontal: 200px;
+
+.MainScreen {
+    @include absoluteExpand;
+    background: url("/assets/images/retina_wood.png");
+    overflow: auto;
+
+    &__Paper {
+        transition: transform 500ms ease-in-out;
+        margin-top: $paper-offset-vertical;
+        margin-left: 200px;
+        width: calc(100vw - 2 * #{$paper-offset-horizontal});
+        min-height: calc(100vh - #{$paper-offset-vertical});
+    }
+}

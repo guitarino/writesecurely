@@ -20,7 +20,7 @@ export class Crypter implements ICrypter {
             );
             this.worker.addEventListener('message', listener);
             const data: EncryptData | DecryptData = {
-                action: <any> actionType,
+                action: actionType as any,
                 requestId,
                 text,
                 hash

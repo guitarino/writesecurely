@@ -1,1 +1,1 @@
-# writesecurely
+# writesecurely [![Build Status](https://travis-ci.org/guitarino/writesecurely.svg?branch=master)](https://travis-ci.org/guitarino/writesecurely) [![Coverage Status](https://coveralls.io/repos/github/guitarino/writesecurely/badge.svg?branch=master)](https://coveralls.io/github/guitarino/writesecurely?branch=master)

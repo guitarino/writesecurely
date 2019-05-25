@@ -1,4 +1,4 @@
-import { Location } from "../../Location/Location.types";
+import { LocationManager } from "../../Location/LocationManager.types";
 import { GitlabConfiguration } from "../GitlabConfiguration/GitlabConfiguration.types";
 import { QueryBuilder } from "../../QueryBuilder/QueryBuilder.types";
 import { GitlabAuthentication as IGitlabAuthentication } from "./GitlabAuthentication.types";
@@ -6,14 +6,14 @@ import { GitlabAuthStorage } from "./GitlabAuthStorage.types";
 import { GitlabAuthenticationData } from "./GitlabAuthenticationData.types";
 
 export class GitlabAuthentication implements IGitlabAuthentication {
-    private readonly location: Location;
+    private readonly locationManager: LocationManager;
     private readonly configuration: GitlabConfiguration;
     private readonly queryBuilder: QueryBuilder;
     private readonly authStorage: GitlabAuthStorage;
     private authData: GitlabAuthenticationData;
 
-    constructor(location: Location, configuration: GitlabConfiguration, queryBuilder: QueryBuilder, authStorage: GitlabAuthStorage, authData: GitlabAuthenticationData) {
-        this.location = location;
+    constructor(locationManager: LocationManager, configuration: GitlabConfiguration, queryBuilder: QueryBuilder, authStorage: GitlabAuthStorage, authData: GitlabAuthenticationData) {
+        this.locationManager = locationManager;
         this.configuration = configuration;
         this.queryBuilder = queryBuilder;
         this.authStorage = authStorage;
@@ -35,7 +35,7 @@ export class GitlabAuthentication implements IGitlabAuthentication {
     }
 
     login() {
-        this.location.redirect(
+        this.locationManager.redirect(
             `${this.configuration.oAuthUri}?${this.queryBuilder.getStringFromQuery({
                 client_id: this.configuration.oAuthClientId,
                 redirect_uri: this.configuration.oAuthRedirectId,

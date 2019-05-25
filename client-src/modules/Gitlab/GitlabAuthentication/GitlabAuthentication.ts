@@ -1,6 +1,6 @@
 import { configureDependency } from "../../../type/inject";
 import { GitlabAuthentication as IGitlabAuthentication } from "./GitlabAuthentication.types";
-import { Location } from "../../Location/Location.types";
+import { LocationManager } from "../../Location/LocationManager.types";
 import { GitlabConfiguration } from "../GitlabConfiguration/GitlabConfiguration.types";
 import { QueryBuilder } from "../../QueryBuilder/QueryBuilder.types";
 import { GitlabAuthentication } from "./GitlabAuthentication.impl";
@@ -8,7 +8,7 @@ import { GitlabAuthentication } from "./GitlabAuthentication.impl";
 configureDependency()
     .implements(IGitlabAuthentication)
     .inject(
-        Location,
+        LocationManager,
         GitlabConfiguration,
         QueryBuilder
     )

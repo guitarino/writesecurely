@@ -10,7 +10,7 @@ export class GitlabAuthentication implements IGitlabAuthentication {
     private readonly configuration: GitlabConfiguration;
     private readonly queryBuilder: QueryBuilder;
     private readonly authStorage: GitlabAuthStorage;
-    private authData: GitlabAuthenticationData;
+    private readonly authData: GitlabAuthenticationData;
 
     constructor(locationManager: LocationManager, configuration: GitlabConfiguration, queryBuilder: QueryBuilder, authStorage: GitlabAuthStorage, authData: GitlabAuthenticationData) {
         this.locationManager = locationManager;

@@ -1,27 +1,26 @@
 import { Location } from "../../Location/Location.types";
 import { GitlabConfiguration } from "../GitlabConfiguration/GitlabConfiguration.types";
-import { observed, connect } from "../../../type/connect";
 import { QueryBuilder } from "../../QueryBuilder/QueryBuilder.types";
 import { GitlabAuthentication as IGitlabAuthentication } from "./GitlabAuthentication.types";
 import { GitlabAuthStorage } from "./GitlabAuthStorage.types";
+import { GitlabAuthenticationData } from "./GitlabAuthenticationData.types";
 
 export class GitlabAuthentication implements IGitlabAuthentication {
     private readonly location: Location;
     private readonly configuration: GitlabConfiguration;
     private readonly queryBuilder: QueryBuilder;
     private readonly authStorage: GitlabAuthStorage;
-    @observed public data: IGitlabAuthentication['data'];
+    private authData: GitlabAuthenticationData;
 
-    constructor(location: Location, configuration: GitlabConfiguration, queryBuilder: QueryBuilder, authStorage: GitlabAuthStorage) {
+    constructor(location: Location, configuration: GitlabConfiguration, queryBuilder: QueryBuilder, authStorage: GitlabAuthStorage, authData: GitlabAuthenticationData) {
         this.location = location;
         this.configuration = configuration;
         this.queryBuilder = queryBuilder;
         this.authStorage = authStorage;
-        this.data = this.getInitialStoredData();
-        connect(this);
+        this.authData.data = this.getInitialStoredData();
     }
 
-    private getInitialStoredData(): IGitlabAuthentication['data'] {
+    private getInitialStoredData(): GitlabAuthenticationData['data'] {
         const storedToken = this.authStorage.getToken();
         if (typeof storedToken === 'string') {
             return {
@@ -46,7 +45,7 @@ export class GitlabAuthentication implements IGitlabAuthentication {
     }
 
     onLoginSucceeded(token: string) {
-        this.data = {
+        this.authData.data = {
             status: 'Authorized',
             token
         };
@@ -54,7 +53,7 @@ export class GitlabAuthentication implements IGitlabAuthentication {
     }
 
     onLoginFailed(error: string, errorDescription: string) {
-        this.data = {
+        this.authData.data = {
             status: 'Error',
             error,
             errorDescription
@@ -63,7 +62,7 @@ export class GitlabAuthentication implements IGitlabAuthentication {
     }
 
     logout() {
-        this.data = {
+        this.authData.data = {
             status: 'Unauthorized'
         };
         this.authStorage.clearToken();

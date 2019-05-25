@@ -2,47 +2,38 @@ import "../../modules/Intent/IntentManager";
 import { IntentManager } from "../../modules/Intent/IntentManager.types";
 import { get, configureDependency, type } from "../../type/inject";
 import { Intent } from "../../modules/Intent/Intent.types";
-import { connect, observed } from "../../type/connect";
 import assert from "assert";
+import { connect } from "typeconnect";
 
 const IAIntent = type<Intent>(Intent);
 class AIntent implements Intent {
-    @observed isCurrentIntentValid: boolean = false;
-    @observed isCurrentIntent: boolean = false;
-    constructor() {
-        connect(this);
-    }
+    isCurrentIntentValid: boolean = false;
+    isCurrentIntent: boolean = false;
 }
 
 const IBIntent = type<Intent>(Intent);
 class BIntent implements Intent {
-    @observed isCurrentIntentValid: boolean = false;
-    @observed isCurrentIntent: boolean = false;
-    constructor() {
-        connect(this);
-    }
+    isCurrentIntentValid: boolean = false;
+    isCurrentIntent: boolean = false;
 }
 
 const ICIntent = type<Intent>(Intent);
 class CIntent implements Intent {
-    @observed isCurrentIntentValid: boolean = false;
-    @observed isCurrentIntent: boolean = false;
-    constructor() {
-        connect(this);
-    }
+    isCurrentIntentValid: boolean = false;
+    isCurrentIntent: boolean = false;
 }
 
 configureDependency()
     .implements(IAIntent)
-    .create(AIntent);
+    .create(connect(AIntent));
 
 configureDependency()
     .implements(IBIntent)
-    .create(BIntent);
+    .create(connect(BIntent));
 
 configureDependency()
     .implements(ICIntent)
-    .create(CIntent);
+    .create(connect(CIntent));
 
 function resetIntents([ aIntent, bIntent, cIntent ]) {
     aIntent.isCurrentIntent = false;

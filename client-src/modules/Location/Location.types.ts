@@ -6,12 +6,7 @@ export interface QueryParameters {
 
 export const Location = type<Location>();
 export interface Location {
+    location: Window['location']
     pathname: string;
     query: QueryParameters;
-    push(url: string);
-    replace(url: string);
-    go(steps: number);
-    goBack();
-    goForward();
-    redirect(url: string);
 }

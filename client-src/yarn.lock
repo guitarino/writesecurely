@@ -236,10 +236,10 @@ strict-uri-encode@^2.0.0:
   resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-2.0.0.tgz#b9c7330c7042862f6b142dc274bbcc5866ce3546"
   integrity sha1-ucczDHBChi9rFC3CdLvMWGbONUY=
 
-typeconnect@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/typeconnect/-/typeconnect-0.1.2.tgz#0a9949caac7a96e321ef8a2b0b91b9c871890810"
-  integrity sha512-oABZ4Us6gmZN379vG3zKOL5b6IEK6Lh7aDmooa6MIPw5ze9o77Qx4nUUyHqZwDRHClGW9NG5dSdamrYBdp9SIw==
+typeconnect@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/typeconnect/-/typeconnect-0.2.0.tgz#e45563c7e090cd1c1ae72afa69d601c73350f869"
+  integrity sha512-v1QTokGR777+Nw2kmD06O/CzlpBLekhKyR1qRSqvNpVX1m97py2P9M9mw9j9TxD/K4d0qdsHRijLHjTlKW4TtQ==
   dependencies:
     "@babel/runtime" "^7.3.1"
 

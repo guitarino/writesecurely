@@ -1,7 +1,7 @@
 {
   "name": "writesecurely",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "static/src/main.js",
   "repository": {
@@ -42,7 +42,7 @@
     "prosemirror-transform": "^1.1.3",
     "prosemirror-view": "^1.8.9",
     "query-string": "^6.4.2",
-    "typeconnect": "^0.1.2",
+    "typeconnect": "^0.2.0",
     "typeinject": "^0.2.0"
   }
 }

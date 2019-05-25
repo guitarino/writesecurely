@@ -17,6 +17,7 @@ export class GitlabAuthentication implements IGitlabAuthentication {
         this.configuration = configuration;
         this.queryBuilder = queryBuilder;
         this.authStorage = authStorage;
+        this.authData = authData;
         this.authData.data = this.getInitialStoredData();
     }
 

@@ -1,5 +1,5 @@
 import { Type, TypeLazy, TypeMultiLazy, TypeMulti } from "typeinject/type.types";
-import { h, ComponentConstructor, Component } from "preact";
+import { h, Component, AnyComponent } from "preact";
 import { Omit } from "../../../types/Omit";
 import { configureDependency, type } from "../../../type/inject";
 import { ValuesOf } from "../../../types/ValuesOf";
@@ -13,7 +13,9 @@ interface getInjectedComponentConstructor<
 > {
     new (props: P, context?: any): Component<P, S>;
     displayName?: string;
-    defaultProps: UC extends TypeWithDefaultProps<infer DPs> ? DPs : never
+    defaultProps: UC extends TypeWithDefaultProps<infer DPs>
+        ? DPs
+        : never
 };
 
 type getInjectedProps<P, PM> = Omit<P, keyof PM>;
@@ -35,7 +37,9 @@ type getPropMap<P, PMKeys extends keyof P> = {
         Type<P[K]>
 };
 
-type getProps<UC> = UC extends ComponentConstructor<infer P, any> ? P : never;
+type getProps<UC> = UC extends AnyComponent<infer P, any>
+    ? P
+    : never;
 
 type TypeWithDefaultProps<DPs> = {
     defaultProps: DPs

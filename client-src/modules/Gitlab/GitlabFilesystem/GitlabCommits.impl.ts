@@ -72,6 +72,9 @@ export class GitlabCommits implements IGitlabCommits {
         };
         const response = await this.request.fetch(url, {
             method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
             body: JSON.stringify(commitBody)
         });
         if (response.status === 201) {

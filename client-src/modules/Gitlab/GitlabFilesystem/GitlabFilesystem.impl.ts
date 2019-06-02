@@ -4,6 +4,7 @@ import { GitlabCommits } from './GitlabCommits.types';
 import { QueryBuilder } from '../../QueryBuilder/QueryBuilder.types';
 import { FileContentItem } from '../../Filesystem/Filesystem.types';
 import { ResponseError } from '../../Errors/ResponseError';
+import { FileNotExist } from '../../Errors/FileNotExist';
 
 type GetFolderContentQuery = {
     page: number,
@@ -70,6 +71,9 @@ export class GitlabFilesystem implements IGitlabFilesystem {
         const response = await this.request.fetch(url);
         if (response.status === 200) {
             return await response.text();
+        }
+        else if (response.status === 404) {
+            throw new FileNotExist(path);
         }
         else {
             throw new ResponseError(url, response.status, response.statusText);

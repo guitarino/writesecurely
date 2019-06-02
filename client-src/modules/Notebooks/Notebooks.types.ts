@@ -1,9 +1,9 @@
-export type Notebook = {
+export type Notebook = UserNotebook & {
     id: string,
-    title: string,
-    description?: string
+    dateTimeCreated: string
 }
 
-export interface Notebooks {
-    getNotebooks(): Notebook[],
+export type UserNotebook = {
+    title: string,
+    description?: string
 }

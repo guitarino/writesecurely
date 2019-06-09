@@ -8,20 +8,23 @@ import { NotebooksNotLoaded } from '../Errors/NotebooksNotLoaded';
 import { NotebookWithIdNotExist } from '../Errors/NotebookWithIdNotExist';
 import { FilesystemSpecification } from '../FilesystemSpecification/FilesystemSpecification.types';
 import { PasswordVerification } from '../PasswordVerification/PasswordVerification.types';
+import { NotebookExistence } from './NotebookExistence.types';
 
 export class NotebookManager implements INotebookManager {
     private readonly filesystem: Filesystem;
     private readonly uuid: UuidManager;
     private readonly notebookData: NotebookData;
-    private readonly filesystemSpecification: FilesystemSpecification;
+    private readonly fileSpec: FilesystemSpecification;
     private readonly passData: PasswordVerification;
+    private readonly notebookExistence: NotebookExistence;
 
-    constructor(filesystem: Filesystem, uuid: UuidManager, notebookData: NotebookData, filesystemSpecification: FilesystemSpecification, passData: PasswordVerification) {
+    constructor(filesystem: Filesystem, uuid: UuidManager, notebookData: NotebookData, fileSpec: FilesystemSpecification, passData: PasswordVerification, notebookExistence: NotebookExistence) {
         this.filesystem = filesystem;
         this.uuid = uuid;
         this.notebookData = notebookData;
-        this.filesystemSpecification = filesystemSpecification;
+        this.fileSpec = fileSpec;
         this.passData = passData;
+        this.notebookExistence = notebookExistence;
     }
 
     async getNotebooks() {
@@ -31,8 +34,13 @@ export class NotebookManager implements INotebookManager {
         };
         try {
             const notebooks: Array<Notebook> = JSON.parse(
-                await this.filesystem.getFileContent(this.filesystemSpecification.getNotebookFilePath())
+                await this.filesystem.getFileContent(
+                    this.fileSpec.getNotebookFilePath()
+                )
             );
+            for (let i = 0; i < notebooks.length; i++) {
+                this.populateNotVerifiedPassData(notebooks[i]);
+            }
             this.notebookData.data = {
                 ...this.notebookData.data,
                 status: 'Loaded',
@@ -42,7 +50,7 @@ export class NotebookManager implements INotebookManager {
         catch (e) {
             if (e instanceof FileNotExist) {
                 await this.filesystem.createFile(
-                    this.filesystemSpecification.getNotebookFilePath(),
+                    this.fileSpec.getNotebookFilePath(),
                     JSON.stringify([])
                 );
                 this.notebookData.data = {
@@ -70,11 +78,7 @@ export class NotebookManager implements INotebookManager {
             status: 'Adding'
         };
         const newNotebook = this.getNewNotebook(userNotebook);
-        this.passData.data.hashStatusMap.set(newNotebook, {
-            hash: [],
-            status: 'Not Created',
-            errorMessage: ''
-        });
+        this.populateNotCreatedPassData(newNotebook);
         const newNotebooks: Array<Notebook> = [
             ...notebooks,
             newNotebook
@@ -92,14 +96,16 @@ export class NotebookManager implements INotebookManager {
             status: 'Deleting'
         };
         const newNotebooks: Array<Notebook> = [ ...notebooks ];
-        const notebookIndex = this.getNotebookIndex(id);
+        const notebookIndex = this.notebookExistence.getNotebookIndex(id);
         if (notebookIndex >= 0) {
             newNotebooks.splice(notebookIndex, 1);
         } else {
             throw new NotebookWithIdNotExist(id);
         }
         await this.updateNotebookFile(newNotebooks, 'Error Deleting');
-        await this.filesystem.deleteFolder(this.filesystemSpecification.getNotebookFolderPath(id));
+        await this.filesystem.deleteFolder(
+            this.fileSpec.getNotebookFolderPath(id)
+        );
     }
 
     async updateNotebook(id: string, updatedNotebook: UserNotebook) {
@@ -112,7 +118,7 @@ export class NotebookManager implements INotebookManager {
             status: 'Updating'
         };
         const newNotebooks: Array<Notebook> = [ ...notebooks ];
-        const notebookIndex = this.getNotebookIndex(id);
+        const notebookIndex = this.notebookExistence.getNotebookIndex(id);
         if (notebookIndex >= 0) {
             const newNotebook = {
                 ...notebooks[notebookIndex],
@@ -125,13 +131,29 @@ export class NotebookManager implements INotebookManager {
         await this.updateNotebookFile(newNotebooks, 'Error Updating');
     }
 
+    private populateNotVerifiedPassData(notebook: Notebook) {
+        this.passData.data.hashStatusMap.set(notebook, {
+            hash: [],
+            status: 'Not Verified',
+            errorMessage: ''
+        });
+    }
+
+    private populateNotCreatedPassData(notebook: Notebook) {
+        this.passData.data.hashStatusMap.set(notebook, {
+            hash: [],
+            status: 'Not Created',
+            errorMessage: ''
+        });
+    }
+
     private async updateNotebookFile(
         newNotebooks: Array<Notebook>,
         errorStatus: 'Error Adding' | 'Error Deleting' | 'Error Updating'
     ) {
         try {
             await this.filesystem.updateFile(
-                this.filesystemSpecification.getNotebookFilePath(),
+                this.fileSpec.getNotebookFilePath(),
                 JSON.stringify(newNotebooks)
             );
             this.notebookData.data = {
@@ -147,17 +169,6 @@ export class NotebookManager implements INotebookManager {
                 errorMessage: e.toString()
             };
         }
-    }
-
-    private getNotebookIndex(id: string) {
-        const { notebooks } = this.notebookData.data;
-        for (let i = 0; i < notebooks.length; i++) {
-            const notebook = notebooks[i];
-            if (notebook.id === id) {
-                return i;
-            }
-        }
-        return -1;
     }
 
     private getNewNotebook(userNotebook: UserNotebook): Notebook {

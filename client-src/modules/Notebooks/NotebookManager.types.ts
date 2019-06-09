@@ -1,4 +1,4 @@
-import { UserNotebook } from "./Notebooks.types";
+import { UserNotebook, Notebook } from "./Notebooks.types";
 import { type } from "../../type/inject";
 
 export const NotebookManager = type<NotebookManager>();

@@ -9,7 +9,12 @@ export class ObjectMap<ObjectType, MappedType> implements IObjectMap<ObjectType,
     }
 
     set(key: ObjectType, value: MappedType) {
-        key[this.key] = value;
+        Object.defineProperty(key, this.key, {
+            configurable: true,
+            enumerable: false,
+            writable: true,
+            value
+        });
     }
 
     get(key: ObjectType) {

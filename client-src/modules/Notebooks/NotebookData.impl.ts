@@ -1,9 +1,6 @@
 import { NotebookData as INotebookData } from './NotebookData.types';
+import { FilesystemEntityData } from '../FilesystemEntity/FilesystemEntityData';
+import { Notebook } from './Notebooks.types';
 
-export class NotebookData implements INotebookData {
-    data: INotebookData['data'] = {
-        status: 'Not Loaded',
-        notebooks: [],
-        errorMessage: ''
-    }
+export class NotebookData extends FilesystemEntityData<Notebook> implements INotebookData {
 }

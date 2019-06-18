@@ -8,7 +8,6 @@ import { DateManager } from '../Date/DateManager.types';
 import { UuidManager } from '../UuidManager/UuidManager.types';
 import { EntityNotExist } from '../Errors/EntityNotExist';
 
-// How can we make entity data specific to a parent?
 export class FilesystemEntityManager<T> implements IFilesystemEntityManager<T> {
     private readonly filesystem: Filesystem;
     private readonly dateManager: DateManager;
@@ -24,7 +23,7 @@ export class FilesystemEntityManager<T> implements IFilesystemEntityManager<T> {
         this.configuration = configuration;
     }
 
-    async load(...parentIds: Array<string>) {
+    async load() {
         this.ensureNotLoading();
         this.ensureNotMutating();
         this.data.load = {
@@ -35,15 +34,13 @@ export class FilesystemEntityManager<T> implements IFilesystemEntityManager<T> {
         try {
             currentList = JSON.parse(
                 await this.decodeIfNeeded(
-                    await this.filesystem.getFileContent(
-                        this.configuration.getPath(...parentIds)
-                    )
+                    await this.filesystem.getFileContent(this.configuration.path)
                 )
             );
         } catch (e) {
             if (e instanceof FileNotExist) {
                 await this.filesystem.createFile(
-                    this.configuration.getPath(...parentIds),
+                    this.configuration.path,
                     await this.encodeIfNeeded(
                         JSON.stringify(currentList)
                     )
@@ -63,7 +60,7 @@ export class FilesystemEntityManager<T> implements IFilesystemEntityManager<T> {
         };
     }
 
-    async add(item: T, ...parentIds: Array<string>) {
+    async add(item: T) {
         this.ensureResourceAvailable();
         const newItem: Entity<T> = this.getNewItem(item);
         const { currentList } = this.data.data;
@@ -78,7 +75,7 @@ export class FilesystemEntityManager<T> implements IFilesystemEntityManager<T> {
         ];
         try {
             await this.filesystem.updateFile(
-                this.configuration.getPath(...parentIds),
+                this.configuration.path,
                 await this.encodeIfNeeded(
                     JSON.stringify(newList)
                 )
@@ -102,7 +99,7 @@ export class FilesystemEntityManager<T> implements IFilesystemEntityManager<T> {
         }
     }
 
-    async update(id: string, itemModifications: Partial<T>, ...parentIds: Array<string>) {
+    async update(id: string, itemModifications: Partial<T>) {
         this.ensureResourceAvailable();
         const { currentList } = this.data.data;
         const index = this.getItemIndex(currentList, id);
@@ -123,7 +120,7 @@ export class FilesystemEntityManager<T> implements IFilesystemEntityManager<T> {
         ];
         try {
             await this.filesystem.updateFile(
-                this.configuration.getPath(...parentIds),
+                this.configuration.path,
                 await this.encodeIfNeeded(
                     JSON.stringify(newList)
                 )
@@ -147,7 +144,7 @@ export class FilesystemEntityManager<T> implements IFilesystemEntityManager<T> {
         }
     }
 
-    async delete(id: string, ...parentIds: Array<string>) {
+    async delete(id: string) {
         this.ensureResourceAvailable();
         const { currentList } = this.data.data;
         const index = this.getItemIndex(currentList, id);
@@ -166,7 +163,7 @@ export class FilesystemEntityManager<T> implements IFilesystemEntityManager<T> {
         ];
         try {
             await this.filesystem.updateFile(
-                this.configuration.getPath(...parentIds),
+                this.configuration.path,
                 await this.encodeIfNeeded(
                     JSON.stringify(newList)
                 )
